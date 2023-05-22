@@ -24,9 +24,17 @@ public class WebController {
     @Autowired
     private com.ericsson.service.IssueClassifier issueClassifier;
 
+    @Autowired
+    private com.ericsson.entity.ClassifiedIssues classifiedIssues;
+
+
     @GetMapping(value = "/get")
-    public String get() {
-        List<Issue> issues = issueClassifier.classify();
-        return issues.toString();
+    public List<Issue> get() {
+        return classifiedIssues.getCwe();
+    }
+
+    @PostMapping(value = "/classify")
+    public void classify() {
+        issueClassifier.classify();
     }
 }

@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Service">
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Issue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/IssueClassifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/IssueClassifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/IssueClassifier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684748203158</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Service">
+      <created>1684754412095</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1684754412095</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

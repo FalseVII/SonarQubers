@@ -1,5 +1,6 @@
 package com.ericsson.service;
 
+import com.ericsson.entity.ClassifiedIssues;
 import com.ericsson.entity.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,17 +20,72 @@ public class IssueClassifier {
     @Autowired
     private com.ericsson.service.SonarQubeService sonarQubeService;
 
-    public List<Issue> classify() {
-        List<Issue> classified = new ArrayList<>();
+    @Autowired
+    private com.ericsson.entity.ClassifiedIssues classifiedIssues;
+
+    public void classify() {
+        List<Issue> owaspa1 = new ArrayList<>();
+        List<Issue> owaspa2 = new ArrayList<>();
+        List<Issue> owaspa3 = new ArrayList<>();
+        List<Issue> owaspa4 = new ArrayList<>();
+        List<Issue> owaspa5 = new ArrayList<>();
+        List<Issue> owaspa6 = new ArrayList<>();
+        List<Issue> owaspa7 = new ArrayList<>();
+        List<Issue> owaspa8 = new ArrayList<>();
+        List<Issue> owaspa9 = new ArrayList<>();
+        List<Issue> owaspa10 = new ArrayList<>();
+        List<Issue> cest = new ArrayList<>();
+        List<Issue> cwe = new ArrayList<>();
         for (com.ericsson.entity.Issue issue : sonarQubeService.getIssues()) {
             if (issue.getTags().contains("cwe")) {
-                System.out.println("Issue key: " + issue.getKey());
-                System.out.println("Issue rule: " + issue.getRule());
-                classified.add(issue);
+                cwe.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a1")) {
+                owaspa1.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a2")) {
+                owaspa2.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a3")) {
+                owaspa3.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a4")) {
+                owaspa4.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a5")) {
+                owaspa5.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a6")) {
+                owaspa6.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a7")) {
+                owaspa7.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a8")) {
+                owaspa8.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a9")) {
+                owaspa9.add(issue);
+            }
+            if (issue.getTags().contains("owasp-a10")) {
+                owaspa10.add(issue);
+            }
+            if (issue.getTags().contains("cest")) {
+                cest.add(issue);
             }
         }
-        return classified;
+        classifiedIssues.setOwaspa1(owaspa1);
+        classifiedIssues.setOwaspa2(owaspa2);
+        classifiedIssues.setOwaspa3(owaspa3);
+        classifiedIssues.setOwaspa4(owaspa4);
+        classifiedIssues.setOwaspa5(owaspa5);
+        classifiedIssues.setOwaspa6(owaspa6);
+        classifiedIssues.setOwaspa7(owaspa7);
+        classifiedIssues.setOwaspa8(owaspa8);
+        classifiedIssues.setOwaspa9(owaspa9);
+        classifiedIssues.setOwaspa10(owaspa10);
+        classifiedIssues.setCest(cest);
+        classifiedIssues.setCwe(cwe);
+        System.out.println("Classified issues");
     }
-
-
 }
