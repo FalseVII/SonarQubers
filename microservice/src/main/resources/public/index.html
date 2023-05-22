@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Top Ten Rules</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<header>
+    <h1>OWASP Top Ten Rules</h1>
+</header>
+
+<main>
+    <div class = "topTen">
+    <ol>
+        <li id="step1">
+            <h2>A1: Injection</h2>
+            <p>Prevent injection attacks, such as SQL, OS, and LDAP injection, by using parameterized queries or prepared statements.</p>
+        </li>
+        <li id="step2">
+            <h2>A2: Broken Authentication</h2>
+            <p>Implement secure authentication mechanisms, such as multi-factor authentication, strong password policies, and session management.</p>
+        </li>
+        <li id="step3">
+            <h2>A3: Sensitive Data Exposure</h2>
+            <p>Encrypt sensitive data at rest and in transit. Use strong encryption algorithms and ensure proper key management.</p>
+        </li>
+        <li id="step4">
+            <h2>A4: XML External Entities (XXE)</h2>
+            <p>Disable or restrict XML external entity processing, validate XML input, and use whitelisting to only allow trusted XML.</p>
+        </li>
+        <li id="step5">
+            <h2>A5: Broken Access Control</h2>
+            <p>Implement access controls and enforce authorization checks to prevent unauthorized access to sensitive functionality or data.</p>
+        </li>
+        <li id="step6">
+            <h2>A6: Security Misconfiguration</h2>
+            <p>Ensure secure configuration of all components, including frameworks, libraries, application servers, and other platforms.</p>
+        </li>
+        <li id="step7">
+            <h2>A7: Cross-Site Scripting (XSS)</h2>
+            <p>Sanitize and validate input, implement content security policy (CSP), and use output encoding to prevent XSS attacks.</p>
+        </li>
+        <li id="step8">
+            <h2>A8: Insecure Deserialization</h2>
+            <p>Avoid or secure deserialization of untrusted data to prevent remote code execution, tampering, and other attacks.</p>
+        </li>
+        <li id="step9">
+            <h2>A9: Using Components with Known Vulnerabilities</h2>
+            <p>Keep all components (libraries, frameworks, etc.) up to date and patch known vulnerabilities in a timely manner.</p>
+        </li>
+        <li id="step10">
+            <h2>A10: Insufficient Logging and Monitoring</h2>
+            <p>Implement proper logging and monitoring to detect and respond to security events and incidents in a timely manner.</p>
+        </li>
+    </ol>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+
+</html>
