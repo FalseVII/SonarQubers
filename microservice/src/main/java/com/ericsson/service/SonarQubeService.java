@@ -1,8 +1,8 @@
 package com.ericsson.service;
 
 
-import com.ericsson.entity.Issue;
-import com.ericsson.entity.IssuesResponse;
+import com.ericsson.entity.Hotspot;
+import com.ericsson.entity.HotspotResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,15 +14,28 @@ import java.util.List;
 public class SonarQubeService {
     private RestTemplate restTemplate = new RestTemplate();
 
-    public List<Issue> getIssues() {
-        final String uri = "http://localhost:9000/api/issues/search?componentKeys=vuln_project";
+    public List<Hotspot> getIssues() {
+        RestTemplate restTemplate = new RestTemplate();
 
+        //add header
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer squ_6cbb1583369b6964f49f60d705eb989ddd678fdb");
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer squ_4d75bfdf908f2b1377e2e4ee86ae18777b4b9fac" );
 
-        ResponseEntity<IssuesResponse> response = restTemplate.exchange(uri, HttpMethod.GET, entity, IssuesResponse.class);
-        return response.getBody().getIssues();
+        String apiUrl = "http://localhost:9000/api/hotspots/search?projectKey=vuln_project";
+
+        // You can add parameters to your URL if needed
+
+        //add headers
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        // Send the request as GET
+
+        ResponseEntity<HotspotResponse> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, HotspotResponse.class);
+
+        // Extract the hotspots from the response
+        List<Hotspot> hotspots = response.getBody().getHotspots();
+
+        return hotspots;
     }
 }
