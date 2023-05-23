@@ -8,6 +8,7 @@
         var countElement = document.getElementById("step" + number);
         countElement.append("Count: " + JSON.stringify(count));
     }
+
     function getGeneric(number){
         $.ajax({
             url: "http://localhost:8080/api/v1/owasp"+number,
