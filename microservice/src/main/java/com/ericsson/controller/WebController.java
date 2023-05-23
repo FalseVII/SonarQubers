@@ -98,4 +98,9 @@ public class WebController {
     public List<Hotspot> getAll() {
         return hotspotResponse.getHotspots();
     }
+
+    @GetMapping(value = "/api/v1/rating")
+    public String getRating() throws Exception {
+        return sonarQubeService.getSecurityReviewRating();
+    }
 }
