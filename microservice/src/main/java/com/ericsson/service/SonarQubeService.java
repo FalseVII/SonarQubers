@@ -22,7 +22,7 @@ public class SonarQubeService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer squ_4d75bfdf908f2b1377e2e4ee86ae18777b4b9fac" );
 
-        String apiUrl = "http://localhost:9000/api/hotspots/search?projectKey=vuln_project";
+        String apiUrl = "http://localhost:9000/api/hotspots/search?projectKey=vuln_project&owaspTop10=a1,a2,a3,a4,a5,a6,a7,a8,a9,a10";
 
         // You can add parameters to your URL if needed
 

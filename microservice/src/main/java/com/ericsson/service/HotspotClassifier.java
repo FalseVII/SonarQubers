@@ -50,30 +50,34 @@ public class HotspotClassifier {
         List<Hotspot> cwe = new ArrayList<>();
         for (Hotspot hotspot : sonarQubeService.getIssues()) {
             System.out.println(hotspot.getRuleKey());
-            if ( hotspot.getRuleKey().equals("java:S5852") || hotspot.getRuleKey().equals("java:S5443")) {
+            if ( hotspot.getRuleKey().equals("java:S5852") || hotspot.getRuleKey().equals("java:S3752") || hotspot.getRuleKey().equals("java:S5804") || hotspot.getRuleKey().equals("java:S4502") || hotspot.getRuleKey().equals("java:S5443")) {
                 owaspa1.add(hotspot);
             }
             if (hotspot.getRuleKey().equals("java:S4790") || hotspot.getRuleKey().equals("java:S6291") || hotspot.getRuleKey().equals("java:S2245") || hotspot.getRuleKey().equals("java:S2257") || hotspot.getRuleKey().equals("java:S5332")) {
                 owaspa2.add(hotspot);
             }
-            if (hotspot.getRuleKey().equals("java:S2077") || hotspot.getRuleKey().equals("java:S1313")|| hotspot.getRuleKey().equals("java:S4512")) {
+            if (hotspot.getRuleKey().equals("java:S2077") || hotspot.getRuleKey().equals("java:S5247") || hotspot.getRuleKey().equals("java:S1313")|| hotspot.getRuleKey().equals("java:S4512")) {
                 owaspa3.add(hotspot);
             }
-            if (hotspot.getRuleKey().equals("java:S6300") || hotspot.getRuleKey().contains("java:S2612")) {
+            if (hotspot.getRuleKey().equals("java:S6300") || hotspot.getRuleKey().equals("java:S5324") || hotspot.getRuleKey().equals("java:S6288") || hotspot.getRuleKey().equals("java:S5320") || hotspot.getRuleKey().equals("java:S2092") || hotspot.getRuleKey().contains("java:S2612")) {
                 owaspa4.add(hotspot);
             }
-            if (hotspot.getRuleKey().equals("java:S5122")) {
+            if (hotspot.getRuleKey().equals("java:S5122") || hotspot.getRuleKey().equals("java:S5693") || hotspot.getRuleKey().equals("java:S3330") || hotspot.getRuleKey().equals("java:S4507") || hotspot.getRuleKey().equals("java:S5689")) {
                 owaspa5.add(hotspot);
             }
-            if (hotspot.getRuleKey().equals("java:S6362") || hotspot.getRuleKey().equals("java:S5042")) {
+            if (hotspot.getRuleKey().equals("java:S6362") || hotspot.getRuleKey().equals("java:S6363") || hotspot.getRuleKey().equals("java:S5042")) {
                 owaspa6.add(hotspot);
             }
             if (hotspot.getRuleKey().contains("java:S2068") || hotspot.getRuleKey().equals("java:S6293") || hotspot.getRuleKey().equals("java:S6418")) {
                 owaspa7.add(hotspot);
             }
-            if (hotspot.getRuleKey().equals("java:S4544") || hotspot.getRuleKey().equals("java:S4036")) {
+            if (hotspot.getRuleKey().equals("java:S4544") || hotspot.getRuleKey().equals("java:S4434") || hotspot.getRuleKey().equals("java:S4036")) {
                 owaspa8.add(hotspot);
             }
+            if (hotspot.getRuleKey().equals("java:S4792")){
+                owaspa9.add(hotspot);
+            }
+
 
         }
         classifiedhotspots.setOwaspa1(owaspa1);

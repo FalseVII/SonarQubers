@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Service">
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Hotspot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/HotspotResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" afterDir="false" />
+    <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Some more rules and refactoring to fit Hotspot DOM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Issue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/IssueClassifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +129,7 @@
       <updated>1684486876411</updated>
       <workItem from="1684486878242" duration="2957000" />
       <workItem from="1684769552343" duration="524000" />
-      <workItem from="1684831741203" duration="5658000" />
+      <workItem from="1684831741203" duration="10652000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1684487102737</created>
@@ -190,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684762610046</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Some more rules and refactoring to fit Hotspot DOM">
+      <created>1684838411961</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684838411961</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +204,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="development" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -221,6 +218,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Service" />
+    <MESSAGE value="Some more rules and refactoring to fit Hotspot DOM" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some more rules and refactoring to fit Hotspot DOM" />
   </component>
 </project>
