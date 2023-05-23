@@ -40,19 +40,33 @@ public class IssueClassifier {
             if (issue.getTags().contains("cwe")) {
                 cwe.add(issue);
             }
-            if (issue.getTags().contains("owasp-a1")) {
+            if (issue.getTags().contains("owasp-a1")
+                    || issue.getRule().contains("java:S5804")
+                    || issue.getRule().contains("java:S6350")
+                    || issue.getRule().contains("java:S4502")) {
                 owaspa1.add(issue);
             }
-            if (issue.getTags().contains("owasp-a2")) {
+            if (issue.getTags().contains("owasp-a2")
+                    || issue.getRule().contains("")) {
                 owaspa2.add(issue);
             }
-            if (issue.getTags().contains("owasp-a3")) {
+            if (issue.getTags().contains("owasp-a3")
+                    || issue.getRule().contains("java:S6350")
+                    || issue.getRule().contains("java:S5247")) {
                 owaspa3.add(issue);
             }
-            if (issue.getTags().contains("owasp-a4")) {
+            if (issue.getTags().contains("owasp-a4")
+                    || issue.getRule().contains("java:S5324")
+                    || issue.getRule().contains("java:S6288")
+                    || issue.getRule().contains("java:S5320")){
                 owaspa4.add(issue);
             }
-            if (issue.getTags().contains("owasp-a5")) {
+            if (issue.getTags().contains("owasp-a5")
+                    || issue.getRule().contains("java:S5693")
+                    || issue.getRule().contains("java:S3330")
+                    || issue.getRule().contains("java:S4507")
+                    || issue.getRule().contains("java:S5689"))
+            {
                 owaspa5.add(issue);
             }
             if (issue.getTags().contains("owasp-a6")) {
@@ -61,13 +75,17 @@ public class IssueClassifier {
             if (issue.getTags().contains("owasp-a7")) {
                 owaspa7.add(issue);
             }
-            if (issue.getTags().contains("owasp-a8")) {
+            if (issue.getTags().contains("owasp-a8")
+                    || issue.getRule().contains("java:S4434")) {
                 owaspa8.add(issue);
             }
-            if (issue.getTags().contains("owasp-a9")) {
+            if (issue.getTags().contains("owasp-a9")
+                    || issue.getRule().contains("java:S4792")
+            ){
                 owaspa9.add(issue);
             }
-            if (issue.getTags().contains("owasp-a10")) {
+            if (issue.getTags().contains("owasp-a10")
+                    || issue.getRule().contains("java:S4792")) {
                 owaspa10.add(issue);
             }
             if (issue.getTags().contains("cest")) {
