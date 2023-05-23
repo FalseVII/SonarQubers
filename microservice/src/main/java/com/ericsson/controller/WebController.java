@@ -2,6 +2,7 @@ package com.ericsson.controller;
 
 import com.ericsson.entity.Hotspot;
 import com.ericsson.entity.Hotspot;
+import com.ericsson.entity.SecurityHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,8 @@ public class WebController {
     @Autowired
     private com.ericsson.entity.ClassifiedHotspots classifiedHotspots;
 
-
-
+    @Autowired
+    private com.ericsson.repository.SecuityHistoryJPA secuityHistoryJPA;
     @PostMapping(value = "/classify")
     public void classify() {
         HotspotClassifier.classify();
@@ -103,4 +104,9 @@ public class WebController {
     public String getRating() throws Exception {
         return sonarQubeService.getSecurityReviewRating();
     }
+    @GetMapping(value = "/api/v1/repo")
+        public List<SecurityHistory> getLastFive(){
+        return secuityHistoryJPA.findTop5ByOrderByDatetimeDesc();
+    }
+
 }
