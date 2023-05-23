@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Some more rules and refactoring to fit Hotspot DOM">
+    <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="More great code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -129,7 +131,7 @@
       <updated>1684486876411</updated>
       <workItem from="1684486878242" duration="2957000" />
       <workItem from="1684769552343" duration="524000" />
-      <workItem from="1684831741203" duration="10652000" />
+      <workItem from="1684831741203" duration="12709000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1684487102737</created>
@@ -187,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684838411961</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="More great code">
+      <created>1684850737133</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1684850737133</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +228,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Service" />
     <MESSAGE value="Some more rules and refactoring to fit Hotspot DOM" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some more rules and refactoring to fit Hotspot DOM" />
+    <MESSAGE value="More great code" />
+    <option name="LAST_COMMIT_MESSAGE" value="More great code" />
   </component>
 </project>
