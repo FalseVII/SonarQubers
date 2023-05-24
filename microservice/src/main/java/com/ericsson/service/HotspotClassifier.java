@@ -3,6 +3,7 @@ package com.ericsson.service;
 
 import com.ericsson.entity.Hotspot;
 import com.ericsson.entity.SecurityHistory;
+import com.ericsson.repository.SecuityHistoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,4 +115,6 @@ public class HotspotClassifier {
 
         System.out.println("Classified hotspots");
     }
+
+
 }
