@@ -1,13 +1,65 @@
-    function handle(number,list){
+
+
+var resultMap = new Map();
+
+
+
+function handle(number,list){
     var count = 0;
-
-        for (var i = 0; i < list.length; i++) {
-            count++;
+    var grade = 0;
+    for (var i = 0; i < list.length; i++) {
+        count++;
+        switch(list[i].vulnerabilityProbability.toUpperCase()){
+            case 'HIGH':
+                grade += 50;
+                break;
+            case 'MEDIUM':
+                grade += 25;
+                break;
+            case 'LOW':
+                grade += 10;
+                break;
+            default:
+                break;
         }
-
-        var countElement = document.getElementById("step" + number);
-        countElement.append("Count: " + JSON.stringify(count));
     }
+    var grade_letter = "";
+
+    if(grade >= 69){
+        grade_letter = "E";
+    }else if(grade >= 36){
+        grade_letter = "D";
+    }else if(grade >= 26){
+        grade_letter = "C";
+    }else if(grade >= 11){
+        grade_letter = "B";
+    }else if(grade >= 0){
+        grade_letter = "A";
+    }else{
+        grade_letter = "Unknown";
+    }
+
+
+    var countElement = document.getElementById("step" + number);
+
+// Create and append the count text node
+    var countTextNode = document.createTextNode("Count: " + JSON.stringify(count));
+    countElement.appendChild(countTextNode);
+
+// Create and append the grade HTML element
+    var gradeElement = document.createElement('div');
+    gradeElement.className = 'rating';
+
+    var gradeLetterElement = document.createElement('div');
+    gradeLetterElement.className = grade_letter;
+    gradeLetterElement.textContent = grade_letter;
+
+    gradeElement.appendChild(gradeLetterElement);
+    countElement.appendChild(gradeElement);
+
+
+
+}
 
     function Drawgraph(json){
 
@@ -20,15 +72,15 @@
             success: function(response) {
                 console.log("GET request successful:", response);
                 var ratingOverAllElement = document.getElementById("ratingOverAll");
-                if (response === 1) {
+                if (response === "1.0") {
                     ratingOverAllElement.textContent = "A";
-                } else if (response === 2) {
+                } else if (response === "2.0") {
                     ratingOverAllElement.textContent = "B";
-                } else if (response === 3) {
+                } else if (response === "3.0") {
                     ratingOverAllElement.textContent = "C";
-                } else if (response === 4) {
+                } else if (response === "4.0") {
                     ratingOverAllElement.textContent = "D";
-                } else if (response === 5) {
+                } else if (response === "5.0") {
                     ratingOverAllElement.textContent = "E";
                 } else {
                     ratingOverAllElement.textContent = "Unknown";

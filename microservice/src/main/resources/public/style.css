@@ -51,6 +51,14 @@ h2 {
 p {
     margin-top: 10px;
 }
+.rating div {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+}
 
 /* Responsive styles */
 @media (max-width: 600px) {
@@ -66,14 +74,7 @@ p {
         font-size: 14px;
     }
 
-    .rating div {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 20px;
-    }
+
 }
 
 
