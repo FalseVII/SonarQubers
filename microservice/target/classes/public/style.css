@@ -18,11 +18,11 @@ header {
 }
 
 .topTen{
-
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     height: 100vh; /* Adjust as needed */
+    width:60%
 }
 
 h1 {
@@ -51,6 +51,14 @@ h2 {
 p {
     margin-top: 10px;
 }
+.rating div {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+}
 
 /* Responsive styles */
 @media (max-width: 600px) {
@@ -65,4 +73,8 @@ p {
     p {
         font-size: 14px;
     }
+
+
 }
+
+

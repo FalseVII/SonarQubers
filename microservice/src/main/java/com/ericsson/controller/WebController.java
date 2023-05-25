@@ -85,20 +85,9 @@ public class WebController {
         return classifiedHotspots.getOwaspa10();
     }
 
-    @GetMapping(value = "/api/v1/cest")
-    public List<Hotspot> getCest() {
-        return classifiedHotspots.getCest();
-    }
-
-    @GetMapping(value = "/api/v1/cwe")
-    public List<Hotspot> getCwe() {
-        return classifiedHotspots.getCwe();
-    }
 
     @GetMapping(value = "/api/v1/all")
-    public List<Hotspot> getAll() {
-        return hotspotResponse.getHotspots();
-    }
+    public List<Hotspot> getAll() {return hotspotResponse.getHotspots();}
 
     @GetMapping(value = "/api/v1/rating")
     public String getRating() throws Exception {

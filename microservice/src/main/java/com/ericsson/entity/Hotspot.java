@@ -156,8 +156,6 @@ public class Hotspot {
                 ", ruleKey='" + ruleKey + '\'' +
                 '}';
     }
-
-
 }
 
 class TextRange {
@@ -207,8 +205,6 @@ class TextRange {
                 ", endOffset=" + endOffset +
                 '}';
     }
-
-    // TODO: Generate getters and setters for each field
 }
 
 class Flow {
@@ -228,8 +224,6 @@ class Flow {
                 "locations=" + locations +
                 '}';
     }
-
-    // TODO: Generate getters and setters for each field
 }
 
 class Location {
@@ -270,5 +264,5 @@ class Location {
                 '}';
     }
 
-    // TODO: Generate getters and setters for each field
+
 }
