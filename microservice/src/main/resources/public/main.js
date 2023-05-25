@@ -75,6 +75,7 @@ function fetchAndFillInfoTab() {
             // Create a string with the overview info
             let infoContent = '<div class="info-container text-left mb-3">';
 
+            infoContent += `<h2 class="text-center border-bottom">General Overview</h2>`
             // For each category, calculate the grade and add the stats to infoContent
             for (let i = 1; i <= 10; i++) {
                 let grade_letter = "";
@@ -93,14 +94,22 @@ function fetchAndFillInfoTab() {
                 }
 
                 infoContent += `
-                    <div class="mb-3">
-                        <h4>${tabTitles[i]}</h4>
-                        <div class="d-flex justify-content-start">
-                            <p class="me-3">Count: ${categoryResults[i].count}</p>
-                            <p>Grade: <span class="${grade_letter}">${grade_letter}</span></p>
-                        </div>
-                    </div>
+    <div class="mb-3 ${i % 2 === 0 ? 'dark' : 'light'}">
+        <h4>${tabTitles[i]}</h4>
+        <div class="d-flex justify-content-between">
+            <p>Count: ${categoryResults[i].count}</p>
+            <div>
+                <span class="fs-5 d-inline-flex justify-content-center align-items-center ${grade_letter}" 
+                      style="border-radius: 50%; padding: 10px; width: 50px; height: 50px;">
+                      ${grade_letter}
+                </span>
+            </div>
+        </div>
+    </div>
 `;
+
+
+
 
             }
 
@@ -172,7 +181,7 @@ function fetchDataAndFillTab(tabNumber) {
 
             let tabContent = `
           <div class="grade-container text-center mb-3">
-            <h2>${tabTitles[tabNumber]}</h2>
+            <h2>Tab ${tabNumber}</h2>
             <h5>Count: ${count}</h5>
             <p class="${grade_letter}">${grade_letter}</p>
           </div>
@@ -205,7 +214,11 @@ function fetchDataAndFillTab(tabNumber) {
           `;
             });
 
-            document.querySelector(`#A${tabNumber}`).addEventListener('click', function(e) {
+            // Assume there is a container to hold tab content
+            const tabContainer = document.querySelector(`#A${tabNumber}`);
+            tabContainer.innerHTML = tabContent;
+
+            tabContainer.addEventListener('click', function(e) {
                 // Check if the event target (the element that was actually clicked) matches '.read-more-btn'
                 if (e.target.matches('.read-more-btn')) {
                     const readMoreDiv = e.target.previousElementSibling;
