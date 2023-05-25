@@ -1,9 +1,4 @@
 
-
-var resultMap = new Map();
-
-
-
 function handle(number,list){
     var count = 0;
     var grade = 0;
@@ -61,95 +56,8 @@ function handle(number,list){
 
 }
 
-    function Drawgraph(){
+    function Drawgraph(data){
     var programData =[];
-    const data = [
-                  	{
-                  		"id": 652,
-                  		"proj_name": "Test",
-                  		"datetime": "2023-05-23T14:44:55.42571",
-                  		"owasp1_count": "0",
-                  		"owasp2_count": "3",
-                  		"owasp3_count": "6",
-                  		"owasp4_count": "0",
-                  		"owasp5_count": "11",
-                  		"owasp6_count": "0",
-                  		"owasp7_count": "1",
-                  		"owasp8_count": "2",
-                  		"owasp9_count": "0",
-                  		"owasp10_count": "0",
-                  		"cest_count": "0",
-                  		"cwe_count": "0"
-                  	},
-                  	{
-                  		"id": 602,
-                  		"proj_name": "Test",
-                  		"datetime": "2023-05-23T11:47:07.628701",
-                  		"owasp1_count": "0",
-                  		"owasp2_count": "3",
-                  		"owasp3_count": "6",
-                  		"owasp4_count": "0",
-                  		"owasp5_count": "11",
-                  		"owasp6_count": "0",
-                  		"owasp7_count": "1",
-                  		"owasp8_count": "2",
-                  		"owasp9_count": "0",
-                  		"owasp10_count": "0",
-                  		"cest_count": "0",
-                  		"cwe_count": "0"
-                  	},
-                  	{
-                  		"id": 552,
-                  		"proj_name": "Test",
-                  		"datetime": "2023-05-23T11:18:42.494881",
-                  		"owasp1_count": "0",
-                  		"owasp2_count": "3",
-                  		"owasp3_count": "6",
-                  		"owasp4_count": "0",
-                  		"owasp5_count": "0",
-                  		"owasp6_count": "0",
-                  		"owasp7_count": "1",
-                  		"owasp8_count": "2",
-                  		"owasp9_count": "0",
-                  		"owasp10_count": "0",
-                  		"cest_count": "0",
-                  		"cwe_count": "0"
-                  	},
-                  	{
-                  		"id": 502,
-                  		"proj_name": "Test",
-                  		"datetime": "2023-05-23T11:16:59.168523",
-                  		"owasp1_count": "0",
-                  		"owasp2_count": "0",
-                  		"owasp3_count": "0",
-                  		"owasp4_count": "0",
-                  		"owasp5_count": "0",
-                  		"owasp6_count": "0",
-                  		"owasp7_count": "0",
-                  		"owasp8_count": "0",
-                  		"owasp9_count": "0",
-                  		"owasp10_count": "0",
-                  		"cest_count": "0",
-                  		"cwe_count": "0"
-                  	},
-                  	{
-                  		"id": 452,
-                  		"proj_name": "Test",
-                  		"datetime": "2023-05-23T10:36:20.013964",
-                  		"owasp1_count": "0",
-                  		"owasp2_count": "0",
-                  		"owasp3_count": "1",
-                  		"owasp4_count": "0",
-                  		"owasp5_count": "0",
-                  		"owasp6_count": "1",
-                  		"owasp7_count": "0",
-                  		"owasp8_count": "0",
-                  		"owasp9_count": "0",
-                  		"owasp10_count": "0",
-                  		"cest_count": "0",
-                  		"cwe_count": "27"
-                  	}
-                  ]
  for (var i = 0; i < data.length; i++) {
 		const date = new Date(data[i].datetime);
 		const formattedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -185,34 +93,45 @@ function handle(number,list){
           });
 			return data;
     }
-
-    function getAndDrawOverAllRating() {
-        $.ajax({
-            url: "http://localhost:8080/api/v1/rating",
-            type: "GET",
-            success: function(response) {
-                console.log("GET request successful:", response);
-                var ratingOverAllElement = document.getElementById("ratingOverAll");
-                if (response === "1.0") {
-                    ratingOverAllElement.textContent = "A";
-                } else if (response === "2.0") {
-                    ratingOverAllElement.textContent = "B";
-                } else if (response === "3.0") {
-                    ratingOverAllElement.textContent = "C";
-                } else if (response === "4.0") {
-                    ratingOverAllElement.textContent = "D";
-                } else if (response === "5.0") {
-                    ratingOverAllElement.textContent = "E";
-                } else {
-                    ratingOverAllElement.textContent = "Unknown";
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("GET request error:", error);
-                // Handle the error here
+function getAndDrawOverAllRating() {
+    $.ajax({
+        url: "http://localhost:8080/api/v1/rating",
+        type: "GET",
+        success: function(response) {
+            console.log("GET request successful:", response);
+            var grade_letter;
+            if (response === "1.0") {
+                grade_letter = "A";
+            } else if (response === "2.0") {
+                grade_letter = "B";
+            } else if (response === "3.0") {
+                grade_letter = "C";
+            } else if (response === "4.0") {
+                grade_letter = "D";
+            } else if (response === "5.0") {
+                grade_letter = "E";
+            } else {
+                grade_letter = "Unknown";
             }
-        });
-    }
+
+            var ratingOverAllElement = document.getElementById("ratingOverAll");
+
+            var gradeElement = document.createElement('div');
+            gradeElement.className = 'rating';
+
+            var gradeLetterElement = document.createElement('div');
+            gradeLetterElement.className = grade_letter;
+            gradeLetterElement.textContent = grade_letter;
+
+            gradeElement.appendChild(gradeLetterElement);
+            ratingOverAllElement.appendChild(gradeElement);
+        },
+        error: function(xhr, status, error) {
+            console.log("GET request error:", error);
+            // Handle the error here
+        }
+    });
+}
 
 
     function getGraphingData(){
@@ -251,8 +170,8 @@ function handle(number,list){
             getGeneric(i);
         }
 
-       // getGraphingData();
-       Drawgraph();
+       getGraphingData();
+
         getAndDrawOverAllRating();
 
 });

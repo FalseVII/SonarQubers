@@ -18,11 +18,11 @@ header {
 }
 
 .topTen{
-
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     height: 100vh; /* Adjust as needed */
+    width:60%
 }
 
 h1 {

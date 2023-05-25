@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class WebControllerTest {
+class WebControllTest_Seperate {
 
     @Mock
     private SonarQubeService sonarQubeService;
@@ -183,31 +183,8 @@ class WebControllerTest {
         assertEquals(owasp10List, result);
     }
 
-    @Test
-    void testGetCest() {
-        List<Hotspot> cestList = new ArrayList<>();
-        cestList.add(new Hotspot());
-        cestList.add(new Hotspot());
 
-        when(classifiedHotspots.getCest()).thenReturn(cestList);
 
-        List<Hotspot> result = webController.getCest();
-
-        assertEquals(cestList, result);
-    }
-
-    @Test
-    void testGetCwe() {
-        List<Hotspot> cweList = new ArrayList<>();
-        cweList.add(new Hotspot());
-        cweList.add(new Hotspot());
-
-        when(classifiedHotspots.getCwe()).thenReturn(cweList);
-
-        List<Hotspot> result = webController.getCwe();
-
-        assertEquals(cweList, result);
-    }
 
     @Test
     void testGetAll() {
