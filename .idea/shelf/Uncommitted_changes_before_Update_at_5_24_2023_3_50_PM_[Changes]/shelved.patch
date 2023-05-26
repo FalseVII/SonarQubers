@@ -1,0 +1,1002 @@
+Index: microservice/src/main/resources/public/script.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n\r\nvar resultMap = new Map();\r\n\r\n\r\n\r\nfunction handle(number,list){\r\n    var count = 0;\r\n    var grade = 0;\r\n    for (var i = 0; i < list.length; i++) {\r\n        count++;\r\n        switch(list[i].vulnerabilityProbability.toUpperCase()){\r\n            case 'HIGH':\r\n                grade += 50;\r\n                break;\r\n            case 'MEDIUM':\r\n                grade += 25;\r\n                break;\r\n            case 'LOW':\r\n                grade += 10;\r\n                break;\r\n            default:\r\n                break;\r\n        }\r\n    }\r\n    var grade_letter = \"\";\r\n\r\n    if(grade >= 69){\r\n        grade_letter = \"E\";\r\n    }else if(grade >= 36){\r\n        grade_letter = \"D\";\r\n    }else if(grade >= 26){\r\n        grade_letter = \"C\";\r\n    }else if(grade >= 11){\r\n        grade_letter = \"B\";\r\n    }else if(grade >= 0){\r\n        grade_letter = \"A\";\r\n    }else{\r\n        grade_letter = \"Unknown\";\r\n    }\r\n\r\n\r\n    var countElement = document.getElementById(\"step\" + number);\r\n\r\n// Create and append the count text node\r\n    var countTextNode = document.createTextNode(\"Count: \" + JSON.stringify(count));\r\n    countElement.appendChild(countTextNode);\r\n\r\n// Create and append the grade HTML element\r\n    var gradeElement = document.createElement('div');\r\n    gradeElement.className = 'rating';\r\n\r\n    var gradeLetterElement = document.createElement('div');\r\n    gradeLetterElement.className = grade_letter;\r\n    gradeLetterElement.textContent = grade_letter;\r\n\r\n    gradeElement.appendChild(gradeLetterElement);\r\n    countElement.appendChild(gradeElement);\r\n\r\n\r\n\r\n}\r\n\r\n    function Drawgraph(){\r\n    var programData =[];\r\n    const data = [\r\n                  \t{\r\n                  \t\t\"id\": 652,\r\n                  \t\t\"proj_name\": \"Test\",\r\n                  \t\t\"datetime\": \"2023-05-23T14:44:55.42571\",\r\n                  \t\t\"owasp1_count\": \"0\",\r\n                  \t\t\"owasp2_count\": \"3\",\r\n                  \t\t\"owasp3_count\": \"6\",\r\n                  \t\t\"owasp4_count\": \"0\",\r\n                  \t\t\"owasp5_count\": \"11\",\r\n                  \t\t\"owasp6_count\": \"0\",\r\n                  \t\t\"owasp7_count\": \"1\",\r\n                  \t\t\"owasp8_count\": \"2\",\r\n                  \t\t\"owasp9_count\": \"0\",\r\n                  \t\t\"owasp10_count\": \"0\",\r\n                  \t\t\"cest_count\": \"0\",\r\n                  \t\t\"cwe_count\": \"0\"\r\n                  \t},\r\n                  \t{\r\n                  \t\t\"id\": 602,\r\n                  \t\t\"proj_name\": \"Test\",\r\n                  \t\t\"datetime\": \"2023-05-23T11:47:07.628701\",\r\n                  \t\t\"owasp1_count\": \"0\",\r\n                  \t\t\"owasp2_count\": \"3\",\r\n                  \t\t\"owasp3_count\": \"6\",\r\n                  \t\t\"owasp4_count\": \"0\",\r\n                  \t\t\"owasp5_count\": \"11\",\r\n                  \t\t\"owasp6_count\": \"0\",\r\n                  \t\t\"owasp7_count\": \"1\",\r\n                  \t\t\"owasp8_count\": \"2\",\r\n                  \t\t\"owasp9_count\": \"0\",\r\n                  \t\t\"owasp10_count\": \"0\",\r\n                  \t\t\"cest_count\": \"0\",\r\n                  \t\t\"cwe_count\": \"0\"\r\n                  \t},\r\n                  \t{\r\n                  \t\t\"id\": 552,\r\n                  \t\t\"proj_name\": \"Test\",\r\n                  \t\t\"datetime\": \"2023-05-23T11:18:42.494881\",\r\n                  \t\t\"owasp1_count\": \"0\",\r\n                  \t\t\"owasp2_count\": \"3\",\r\n                  \t\t\"owasp3_count\": \"6\",\r\n                  \t\t\"owasp4_count\": \"0\",\r\n                  \t\t\"owasp5_count\": \"0\",\r\n                  \t\t\"owasp6_count\": \"0\",\r\n                  \t\t\"owasp7_count\": \"1\",\r\n                  \t\t\"owasp8_count\": \"2\",\r\n                  \t\t\"owasp9_count\": \"0\",\r\n                  \t\t\"owasp10_count\": \"0\",\r\n                  \t\t\"cest_count\": \"0\",\r\n                  \t\t\"cwe_count\": \"0\"\r\n                  \t},\r\n                  \t{\r\n                  \t\t\"id\": 502,\r\n                  \t\t\"proj_name\": \"Test\",\r\n                  \t\t\"datetime\": \"2023-05-23T11:16:59.168523\",\r\n                  \t\t\"owasp1_count\": \"0\",\r\n                  \t\t\"owasp2_count\": \"0\",\r\n                  \t\t\"owasp3_count\": \"0\",\r\n                  \t\t\"owasp4_count\": \"0\",\r\n                  \t\t\"owasp5_count\": \"0\",\r\n                  \t\t\"owasp6_count\": \"0\",\r\n                  \t\t\"owasp7_count\": \"0\",\r\n                  \t\t\"owasp8_count\": \"0\",\r\n                  \t\t\"owasp9_count\": \"0\",\r\n                  \t\t\"owasp10_count\": \"0\",\r\n                  \t\t\"cest_count\": \"0\",\r\n                  \t\t\"cwe_count\": \"0\"\r\n                  \t},\r\n                  \t{\r\n                  \t\t\"id\": 452,\r\n                  \t\t\"proj_name\": \"Test\",\r\n                  \t\t\"datetime\": \"2023-05-23T10:36:20.013964\",\r\n                  \t\t\"owasp1_count\": \"0\",\r\n                  \t\t\"owasp2_count\": \"0\",\r\n                  \t\t\"owasp3_count\": \"1\",\r\n                  \t\t\"owasp4_count\": \"0\",\r\n                  \t\t\"owasp5_count\": \"0\",\r\n                  \t\t\"owasp6_count\": \"1\",\r\n                  \t\t\"owasp7_count\": \"0\",\r\n                  \t\t\"owasp8_count\": \"0\",\r\n                  \t\t\"owasp9_count\": \"0\",\r\n                  \t\t\"owasp10_count\": \"0\",\r\n                  \t\t\"cest_count\": \"0\",\r\n                  \t\t\"cwe_count\": \"27\"\r\n                  \t}\r\n                  ]\r\n for (var i = 0; i < data.length; i++) {\r\n\t\tconst date = new Date(data[i].datetime);\r\n\t\tconst formattedDate = date.getFullYear() + \"-\" + (date.getMonth() + 1) + \"-\" + date.getDate();\r\n\t\tconst allHotSpots =  parseInt(data[i].owasp1_count)+  parseInt(data[i].owasp2_count)+  parseInt(data[i].owasp3_count)\r\n\t\t+ parseInt(data[i].owasp4_count) +  parseInt(data[i].owasp5_count);\r\n      programData.push({\r\n        year: formattedDate,\r\n        quantity: allHotSpots\r\n      });\r\n    }\r\n          // Create the chart\r\n            var ctx = document.getElementById('myChartLine').getContext('2d');\r\n    var myChart = new Chart(ctx, {\r\n\r\n      type: 'line',\r\n      data: {\r\n        labels: programData.map(function(date) {\r\n          return date.year;\r\n        }),\r\n        datasets: [{\r\n          label: 'Vulnerabilities',\r\n          data: programData.map(function(hotspot) {\r\n            return hotspot.quantity;\r\n          }),\r\n          borderColor: 'rgb(255, 99, 132)',\r\n          borderWidth: 1\r\n        }]\r\n      },\r\n      options: {\r\n        responsive: false,\r\n        maintainAspectRatio: false\r\n      }\r\n          });\r\n\t\t\treturn data;\r\n    }\r\n\r\n    function getAndDrawOverAllRating() {\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/rating\",\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                var ratingOverAllElement = document.getElementById(\"ratingOverAll\");\r\n                if (response === \"1.0\") {\r\n                    ratingOverAllElement.textContent = \"A\";\r\n                } else if (response === \"2.0\") {\r\n                    ratingOverAllElement.textContent = \"B\";\r\n                } else if (response === \"3.0\") {\r\n                    ratingOverAllElement.textContent = \"C\";\r\n                } else if (response === \"4.0\") {\r\n                    ratingOverAllElement.textContent = \"D\";\r\n                } else if (response === \"5.0\") {\r\n                    ratingOverAllElement.textContent = \"E\";\r\n                } else {\r\n                    ratingOverAllElement.textContent = \"Unknown\";\r\n                }\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    function getGraphingData(){\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/repo\",\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                //Drawgraph(response);\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n    }\r\n\r\n    function getGeneric(number){\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/owasp\"+number,\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                handle(number,response)\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n\r\n    }\r\n    $(document).ready(function() {\r\n\r\n        for(i =1; i <=10; i++ ){\r\n            getGeneric(i);\r\n        }\r\n\r\n       // getGraphingData();\r\n       Drawgraph();\r\n        getAndDrawOverAllRating();\r\n\r\n});
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/resources/public/script.js b/microservice/src/main/resources/public/script.js
+--- a/microservice/src/main/resources/public/script.js	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/main/resources/public/script.js	(date 1684939616007)
+@@ -1,8 +1,3 @@
+-
+-
+-var resultMap = new Map();
+-
+-
+ 
+ function handle(number,list){
+     var count = 0;
+@@ -61,95 +56,8 @@
+ 
+ }
+ 
+-    function Drawgraph(){
++    function Drawgraph(data){
+     var programData =[];
+-    const data = [
+-                  	{
+-                  		"id": 652,
+-                  		"proj_name": "Test",
+-                  		"datetime": "2023-05-23T14:44:55.42571",
+-                  		"owasp1_count": "0",
+-                  		"owasp2_count": "3",
+-                  		"owasp3_count": "6",
+-                  		"owasp4_count": "0",
+-                  		"owasp5_count": "11",
+-                  		"owasp6_count": "0",
+-                  		"owasp7_count": "1",
+-                  		"owasp8_count": "2",
+-                  		"owasp9_count": "0",
+-                  		"owasp10_count": "0",
+-                  		"cest_count": "0",
+-                  		"cwe_count": "0"
+-                  	},
+-                  	{
+-                  		"id": 602,
+-                  		"proj_name": "Test",
+-                  		"datetime": "2023-05-23T11:47:07.628701",
+-                  		"owasp1_count": "0",
+-                  		"owasp2_count": "3",
+-                  		"owasp3_count": "6",
+-                  		"owasp4_count": "0",
+-                  		"owasp5_count": "11",
+-                  		"owasp6_count": "0",
+-                  		"owasp7_count": "1",
+-                  		"owasp8_count": "2",
+-                  		"owasp9_count": "0",
+-                  		"owasp10_count": "0",
+-                  		"cest_count": "0",
+-                  		"cwe_count": "0"
+-                  	},
+-                  	{
+-                  		"id": 552,
+-                  		"proj_name": "Test",
+-                  		"datetime": "2023-05-23T11:18:42.494881",
+-                  		"owasp1_count": "0",
+-                  		"owasp2_count": "3",
+-                  		"owasp3_count": "6",
+-                  		"owasp4_count": "0",
+-                  		"owasp5_count": "0",
+-                  		"owasp6_count": "0",
+-                  		"owasp7_count": "1",
+-                  		"owasp8_count": "2",
+-                  		"owasp9_count": "0",
+-                  		"owasp10_count": "0",
+-                  		"cest_count": "0",
+-                  		"cwe_count": "0"
+-                  	},
+-                  	{
+-                  		"id": 502,
+-                  		"proj_name": "Test",
+-                  		"datetime": "2023-05-23T11:16:59.168523",
+-                  		"owasp1_count": "0",
+-                  		"owasp2_count": "0",
+-                  		"owasp3_count": "0",
+-                  		"owasp4_count": "0",
+-                  		"owasp5_count": "0",
+-                  		"owasp6_count": "0",
+-                  		"owasp7_count": "0",
+-                  		"owasp8_count": "0",
+-                  		"owasp9_count": "0",
+-                  		"owasp10_count": "0",
+-                  		"cest_count": "0",
+-                  		"cwe_count": "0"
+-                  	},
+-                  	{
+-                  		"id": 452,
+-                  		"proj_name": "Test",
+-                  		"datetime": "2023-05-23T10:36:20.013964",
+-                  		"owasp1_count": "0",
+-                  		"owasp2_count": "0",
+-                  		"owasp3_count": "1",
+-                  		"owasp4_count": "0",
+-                  		"owasp5_count": "0",
+-                  		"owasp6_count": "1",
+-                  		"owasp7_count": "0",
+-                  		"owasp8_count": "0",
+-                  		"owasp9_count": "0",
+-                  		"owasp10_count": "0",
+-                  		"cest_count": "0",
+-                  		"cwe_count": "27"
+-                  	}
+-                  ]
+  for (var i = 0; i < data.length; i++) {
+ 		const date = new Date(data[i].datetime);
+ 		const formattedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+@@ -185,34 +93,45 @@
+           });
+ 			return data;
+     }
+-
+-    function getAndDrawOverAllRating() {
+-        $.ajax({
+-            url: "http://localhost:8080/api/v1/rating",
+-            type: "GET",
+-            success: function(response) {
+-                console.log("GET request successful:", response);
+-                var ratingOverAllElement = document.getElementById("ratingOverAll");
+-                if (response === "1.0") {
+-                    ratingOverAllElement.textContent = "A";
+-                } else if (response === "2.0") {
+-                    ratingOverAllElement.textContent = "B";
+-                } else if (response === "3.0") {
+-                    ratingOverAllElement.textContent = "C";
+-                } else if (response === "4.0") {
+-                    ratingOverAllElement.textContent = "D";
+-                } else if (response === "5.0") {
+-                    ratingOverAllElement.textContent = "E";
+-                } else {
+-                    ratingOverAllElement.textContent = "Unknown";
+-                }
+-            },
+-            error: function(xhr, status, error) {
+-                console.log("GET request error:", error);
+-                // Handle the error here
+-            }
+-        });
+-    }
++function getAndDrawOverAllRating() {
++    $.ajax({
++        url: "http://localhost:8080/api/v1/rating",
++        type: "GET",
++        success: function(response) {
++            console.log("GET request successful:", response);
++            var grade_letter;
++            if (response === "1.0") {
++                grade_letter = "A";
++            } else if (response === "2.0") {
++                grade_letter = "B";
++            } else if (response === "3.0") {
++                grade_letter = "C";
++            } else if (response === "4.0") {
++                grade_letter = "D";
++            } else if (response === "5.0") {
++                grade_letter = "E";
++            } else {
++                grade_letter = "Unknown";
++            }
++
++            var ratingOverAllElement = document.getElementById("ratingOverAll");
++
++            var gradeElement = document.createElement('div');
++            gradeElement.className = 'rating';
++
++            var gradeLetterElement = document.createElement('div');
++            gradeLetterElement.className = grade_letter;
++            gradeLetterElement.textContent = grade_letter;
++
++            gradeElement.appendChild(gradeLetterElement);
++            ratingOverAllElement.appendChild(gradeElement);
++        },
++        error: function(xhr, status, error) {
++            console.log("GET request error:", error);
++            // Handle the error here
++        }
++    });
++}
+ 
+ 
+     function getGraphingData(){
+@@ -251,8 +170,8 @@
+             getGeneric(i);
+         }
+ 
+-       // getGraphingData();
+-       Drawgraph();
++       getGraphingData();
++
+         getAndDrawOverAllRating();
+ 
+ });
+\ No newline at end of file
+Index: microservice/src/test/java/com/ericsson/controller/WebControllerTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.controller;\r\n\r\nimport com.ericsson.entity.ClassifiedHotspots;\r\nimport com.ericsson.entity.Hotspot;\r\nimport com.ericsson.entity.HotspotResponse;\r\nimport com.ericsson.entity.SecurityHistory;\r\nimport com.ericsson.service.HotspotClassifier;\r\nimport com.ericsson.service.SonarQubeService;\r\nimport com.ericsson.repository.SecuityHistoryJPA;\r\n\r\nimport org.junit.jupiter.api.BeforeEach;\r\nimport org.junit.jupiter.api.Test;\r\nimport org.mockito.InjectMocks;\r\nimport org.mockito.Mock;\r\nimport org.mockito.MockitoAnnotations;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport static org.junit.jupiter.api.Assertions.*;\r\nimport static org.mockito.Mockito.*;\r\n\r\nclass WebControllerTest {\r\n\r\n    @Mock\r\n    private SonarQubeService sonarQubeService;\r\n\r\n    @Mock\r\n    private ClassifiedHotspots classifiedHotspots;\r\n\r\n    @Mock\r\n    private HotspotClassifier hotspotClassifier;\r\n\r\n    @Mock\r\n    private HotspotResponse hotspotResponse;\r\n\r\n    @Mock\r\n    private SecuityHistoryJPA secuityHistoryJPA;\r\n\r\n    @Mock\r\n    private SecuityHistoryJPA securityHistoryJPA;\r\n\r\n    @InjectMocks\r\n    private WebController webController;\r\n\r\n    @BeforeEach\r\n    void setUp() {\r\n        MockitoAnnotations.openMocks(this);\r\n    }\r\n\r\n    @Test\r\n    void testClassify() {\r\n        webController.classify();\r\n\r\n        verify(hotspotClassifier, times(1)).classify();\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp1() {\r\n        List<Hotspot> owasp1List = new ArrayList<>();\r\n        owasp1List.add(new Hotspot());\r\n        owasp1List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa1()).thenReturn(owasp1List);\r\n        List<Hotspot> result = webController.getOwasp1();\r\n        assertEquals(owasp1List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp2() {\r\n        List<Hotspot> owasp2List = new ArrayList<>();\r\n        owasp2List.add(new Hotspot());\r\n        owasp2List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa2()).thenReturn(owasp2List);\r\n\r\n        List<Hotspot> result = webController.getOwasp2();\r\n\r\n        assertEquals(owasp2List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp3() {\r\n        List<Hotspot> owasp3List = new ArrayList<>();\r\n        owasp3List.add(new Hotspot());\r\n        owasp3List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa3()).thenReturn(owasp3List);\r\n\r\n        List<Hotspot> result = webController.getOwasp3();\r\n\r\n        assertEquals(owasp3List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp4() {\r\n        List<Hotspot> owasp4List = new ArrayList<>();\r\n        owasp4List.add(new Hotspot());\r\n        owasp4List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa4()).thenReturn(owasp4List);\r\n\r\n        List<Hotspot> result = webController.getOwasp4();\r\n\r\n        assertEquals(owasp4List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp5() {\r\n        List<Hotspot> owasp5List = new ArrayList<>();\r\n        owasp5List.add(new Hotspot());\r\n        owasp5List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa5()).thenReturn(owasp5List);\r\n\r\n        List<Hotspot> result = webController.getOwasp5();\r\n\r\n        assertEquals(owasp5List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp6() {\r\n        List<Hotspot> owasp6List = new ArrayList<>();\r\n        owasp6List.add(new Hotspot());\r\n        owasp6List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa6()).thenReturn(owasp6List);\r\n\r\n        List<Hotspot> result = webController.getOwasp6();\r\n\r\n        assertEquals(owasp6List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp7() {\r\n        List<Hotspot> owasp7List = new ArrayList<>();\r\n        owasp7List.add(new Hotspot());\r\n        owasp7List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa7()).thenReturn(owasp7List);\r\n\r\n        List<Hotspot> result = webController.getOwasp7();\r\n\r\n        assertEquals(owasp7List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp8() {\r\n        List<Hotspot> owasp8List = new ArrayList<>();\r\n        owasp8List.add(new Hotspot());\r\n        owasp8List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa8()).thenReturn(owasp8List);\r\n\r\n        List<Hotspot> result = webController.getOwasp8();\r\n\r\n        assertEquals(owasp8List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp9() {\r\n        List<Hotspot> owasp9List = new ArrayList<>();\r\n        owasp9List.add(new Hotspot());\r\n        owasp9List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa9()).thenReturn(owasp9List);\r\n\r\n        List<Hotspot> result = webController.getOwasp9();\r\n\r\n        assertEquals(owasp9List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetOwasp10() {\r\n        List<Hotspot> owasp10List = new ArrayList<>();\r\n        owasp10List.add(new Hotspot());\r\n        owasp10List.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getOwaspa10()).thenReturn(owasp10List);\r\n\r\n        List<Hotspot> result = webController.getOwasp10();\r\n\r\n        assertEquals(owasp10List, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetCest() {\r\n        List<Hotspot> cestList = new ArrayList<>();\r\n        cestList.add(new Hotspot());\r\n        cestList.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getCest()).thenReturn(cestList);\r\n\r\n        List<Hotspot> result = webController.getCest();\r\n\r\n        assertEquals(cestList, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetCwe() {\r\n        List<Hotspot> cweList = new ArrayList<>();\r\n        cweList.add(new Hotspot());\r\n        cweList.add(new Hotspot());\r\n\r\n        when(classifiedHotspots.getCwe()).thenReturn(cweList);\r\n\r\n        List<Hotspot> result = webController.getCwe();\r\n\r\n        assertEquals(cweList, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetAll() {\r\n        List<Hotspot> hotspotList = new ArrayList<>();\r\n        hotspotList.add(new Hotspot());\r\n        hotspotList.add(new Hotspot());\r\n\r\n        when(hotspotResponse.getHotspots()).thenReturn(hotspotList);\r\n\r\n        List<Hotspot> result = webController.getAll();\r\n\r\n        assertEquals(hotspotList, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetRating() throws Exception {\r\n        String expectedRating = \"High\";\r\n        when(sonarQubeService.getSecurityReviewRating()).thenReturn(expectedRating);\r\n\r\n        String result = webController.getRating();\r\n\r\n        assertEquals(expectedRating, result);\r\n    }\r\n\r\n    @Test\r\n    void testGetLastFive() {\r\n        List<SecurityHistory> expectedList = new ArrayList<>();\r\n        expectedList.add(new SecurityHistory());\r\n        expectedList.add(new SecurityHistory());\r\n        expectedList.add(new SecurityHistory());\r\n        expectedList.add(new SecurityHistory());\r\n        expectedList.add(new SecurityHistory());\r\n\r\n        when(secuityHistoryJPA.findTop5ByOrderByDatetimeDesc()).thenReturn(expectedList);\r\n\r\n        List<SecurityHistory> result = webController.getLastFive();\r\n\r\n        assertEquals(expectedList, result);\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java b/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java
+--- a/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java	(date 1684939523088)
+@@ -20,7 +20,7 @@
+ import static org.junit.jupiter.api.Assertions.*;
+ import static org.mockito.Mockito.*;
+ 
+-class WebControllerTest {
++class WebControllTest_Seperate {
+ 
+     @Mock
+     private SonarQubeService sonarQubeService;
+@@ -183,31 +183,8 @@
+         assertEquals(owasp10List, result);
+     }
+ 
+-    @Test
+-    void testGetCest() {
+-        List<Hotspot> cestList = new ArrayList<>();
+-        cestList.add(new Hotspot());
+-        cestList.add(new Hotspot());
+-
+-        when(classifiedHotspots.getCest()).thenReturn(cestList);
+ 
+-        List<Hotspot> result = webController.getCest();
+ 
+-        assertEquals(cestList, result);
+-    }
+-
+-    @Test
+-    void testGetCwe() {
+-        List<Hotspot> cweList = new ArrayList<>();
+-        cweList.add(new Hotspot());
+-        cweList.add(new Hotspot());
+-
+-        when(classifiedHotspots.getCwe()).thenReturn(cweList);
+-
+-        List<Hotspot> result = webController.getCwe();
+-
+-        assertEquals(cweList, result);
+-    }
+ 
+     @Test
+     void testGetAll() {
+Index: microservice/src/main/java/com/ericsson/controller/WebController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.controller;\r\n\r\nimport com.ericsson.entity.Hotspot;\r\nimport com.ericsson.entity.Hotspot;\r\nimport com.ericsson.entity.SecurityHistory;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PostMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\npublic class WebController {\r\n\r\n    @Autowired\r\n    private com.ericsson.service.SonarQubeService sonarQubeService;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.HotspotResponse hotspotResponse;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.Hotspot Hotspot;\r\n\r\n    @Autowired\r\n    private com.ericsson.service.HotspotClassifier HotspotClassifier;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.ClassifiedHotspots classifiedHotspots;\r\n\r\n    @Autowired\r\n    private com.ericsson.repository.SecuityHistoryJPA secuityHistoryJPA;\r\n    @PostMapping(value = \"/classify\")\r\n    public void classify() {\r\n        HotspotClassifier.classify();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp1\")\r\n    public List<Hotspot> getOwasp1() {\r\n        return classifiedHotspots.getOwaspa1();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp2\")\r\n    public List<Hotspot> getOwasp2() {\r\n        return classifiedHotspots.getOwaspa2();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp3\")\r\n    public List<Hotspot> getOwasp3() {\r\n        return classifiedHotspots.getOwaspa3();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp4\")\r\n    public List<Hotspot> getOwasp4() {\r\n        return classifiedHotspots.getOwaspa4();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp5\")\r\n    public List<Hotspot> getOwasp5() {\r\n        return classifiedHotspots.getOwaspa5();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp6\")\r\n    public List<Hotspot> getOwasp6() {\r\n        return classifiedHotspots.getOwaspa6();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp7\")\r\n    public List<Hotspot> getOwasp7() {\r\n        return classifiedHotspots.getOwaspa7();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp8\")\r\n    public List<Hotspot> getOwasp8() {\r\n        return classifiedHotspots.getOwaspa8();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp9\")\r\n    public List<Hotspot> getOwasp9() {\r\n        return classifiedHotspots.getOwaspa9();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp10\")\r\n    public List<Hotspot> getOwasp10() {\r\n        return classifiedHotspots.getOwaspa10();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/cest\")\r\n    public List<Hotspot> getCest() {\r\n        return classifiedHotspots.getCest();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/cwe\")\r\n    public List<Hotspot> getCwe() {\r\n        return classifiedHotspots.getCwe();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/all\")\r\n    public List<Hotspot> getAll() {\r\n        return hotspotResponse.getHotspots();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/rating\")\r\n    public String getRating() throws Exception {\r\n        return sonarQubeService.getSecurityReviewRating();\r\n    }\r\n    @GetMapping(value = \"/api/v1/repo\")\r\n        public List<SecurityHistory> getLastFive(){\r\n        return secuityHistoryJPA.findTop5ByOrderByDatetimeDesc();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/controller/WebController.java b/microservice/src/main/java/com/ericsson/controller/WebController.java
+--- a/microservice/src/main/java/com/ericsson/controller/WebController.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/main/java/com/ericsson/controller/WebController.java	(date 1684939523096)
+@@ -85,20 +85,9 @@
+         return classifiedHotspots.getOwaspa10();
+     }
+ 
+-    @GetMapping(value = "/api/v1/cest")
+-    public List<Hotspot> getCest() {
+-        return classifiedHotspots.getCest();
+-    }
+-
+-    @GetMapping(value = "/api/v1/cwe")
+-    public List<Hotspot> getCwe() {
+-        return classifiedHotspots.getCwe();
+-    }
+ 
+     @GetMapping(value = "/api/v1/all")
+-    public List<Hotspot> getAll() {
+-        return hotspotResponse.getHotspots();
+-    }
++    public List<Hotspot> getAll() {return hotspotResponse.getHotspots();}
+ 
+     @GetMapping(value = "/api/v1/rating")
+     public String getRating() throws Exception {
+Index: microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.service;\r\n\r\n\r\n\r\n\r\n//public class SonarQubeServiceTest {\r\n//\r\n//    private static final String SONARQUBE_URL = \"http://localhost:9000\";\r\n//    private static final String AUTHORIZATION_HEADER = \"Bearer your-access-token\";\r\n//\r\n//    @Test\r\n//    public void testGetIssues() {\r\n//        RestTemplate restTemplate = new RestTemplate();\r\n//\r\n//        // Set the authorization header\r\n//        restTemplate.getInterceptors().add((request, body, execution) -> {\r\n//            request.getHeaders().set(\"Authorization\", AUTHORIZATION_HEADER);\r\n//            return execution.execute(request, body);\r\n//        });\r\n//\r\n//        String apiUrl = SONARQUBE_URL + \"/api/issues/search\";\r\n//\r\n//        // Perform the API request\r\n//        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,\r\n//                () -> restTemplate.getForObject(apiUrl, String.class));\r\n//\r\n//        // Assert that the error code is 401\r\n//        assertEquals(401, exception.getRawStatusCode());\r\n//    }\r\n//}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java b/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java
+--- a/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java	(date 1684939523104)
+@@ -1,31 +1,78 @@
+ package com.ericsson.service;
+ 
++import com.ericsson.entity.Hotspot;
++import com.ericsson.entity.HotspotResponse;
++import org.junit.jupiter.api.Test;
++import org.mockito.InjectMocks;
++import org.mockito.Mock;
++import org.mockito.Mockito;
++import org.springframework.boot.test.context.SpringBootTest;
++import org.springframework.http.HttpHeaders;
++import org.springframework.http.HttpMethod;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.client.RestTemplate;
++
++import java.io.ByteArrayInputStream;
++import java.io.InputStream;
++import java.net.HttpURLConnection;
++import java.net.URL;
++import java.util.Collections;
++import java.util.List;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.mockito.ArgumentMatchers.any;
++import static org.mockito.Mockito.when;
++
++@SpringBootTest
++public class SonarQubeServiceTest {
+ 
++    @Mock
++    private RestTemplate restTemplate;
+ 
++    @InjectMocks
++    private SonarQubeService sonarQubeService;
+ 
+-//public class SonarQubeServiceTest {
+-//
+-//    private static final String SONARQUBE_URL = "http://localhost:9000";
+-//    private static final String AUTHORIZATION_HEADER = "Bearer your-access-token";
+-//
+-//    @Test
+-//    public void testGetIssues() {
+-//        RestTemplate restTemplate = new RestTemplate();
+-//
+-//        // Set the authorization header
+-//        restTemplate.getInterceptors().add((request, body, execution) -> {
+-//            request.getHeaders().set("Authorization", AUTHORIZATION_HEADER);
+-//            return execution.execute(request, body);
+-//        });
+-//
+-//        String apiUrl = SONARQUBE_URL + "/api/issues/search";
+-//
+-//        // Perform the API request
+-//        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
+-//                () -> restTemplate.getForObject(apiUrl, String.class));
+-//
+-//        // Assert that the error code is 401
+-//        assertEquals(401, exception.getRawStatusCode());
+-//    }
+-//}
++    @Test
++    public void testGetIssues() {
++        // Prepare data for the test
++        Hotspot hotspot = new Hotspot();
++        HotspotResponse hotspotResponse = new HotspotResponse();
++        hotspotResponse.setHotspots(Collections.singletonList(hotspot));
+ 
++        ResponseEntity<HotspotResponse> responseEntity = ResponseEntity.ok(hotspotResponse);
++
++        // Configure the mock to return our prepared data
++        when(restTemplate.exchange(any(String.class), any(HttpMethod.class), any(), any(Class.class)))
++                .thenReturn(responseEntity);
++
++        // Call the method we're testing
++        List<Hotspot> hotspots = sonarQubeService.getIssues();
++
++        // Verify the results
++        assertEquals(23, hotspots.size());
++
++    }
++
++    @Test
++    public void testGetSecurityReviewRating() throws Exception {
++        // Prepare data for the test
++        String json = "{\"component\": {\"measures\": [{\"value\": \"5.0\"}]}}";
++
++        InputStream inputStream = new ByteArrayInputStream(json.getBytes());
++        HttpURLConnection connection = Mockito.mock(HttpURLConnection.class);
++        when(connection.getResponseCode()).thenReturn(200);
++        when(connection.getInputStream()).thenReturn(inputStream);
++
++        URL url = Mockito.mock(URL.class);
++        when(url.openConnection()).thenReturn(connection);
++
++        // Configure the mock to return our prepared data
++        when(restTemplate.getForObject(any(String.class), any(Class.class))).thenReturn(url);
++
++        // Call the method we're testing
++        String rating = sonarQubeService.getSecurityReviewRating();
++
++        // Verify the results
++        assertEquals("5.0", rating);
++    }
++}
+\ No newline at end of file
+Index: microservice/src/main/java/com/ericsson/repository/SecuritySummaryRepository.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/repository/SecuritySummaryRepository.java b/microservice/src/main/java/com/ericsson/repository/SecuritySummaryRepository.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/repository/SecuritySummaryRepository.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ /dev/null	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
+@@ -1,10 +0,0 @@
+-package com.ericsson.repository;
+-
+-
+-
+-import com.ericsson.entity.SecuritySummary;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-
+-public interface SecuritySummaryRepository extends JpaRepository<SecuritySummary, Long> {
+-
+-}
+Index: microservice/src/main/java/com/ericsson/entity/SecuritySummary.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/SecuritySummary.java b/microservice/src/main/java/com/ericsson/entity/SecuritySummary.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/entity/SecuritySummary.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ /dev/null	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
+@@ -1,41 +0,0 @@
+-package com.ericsson.entity;
+-
+-
+-import jakarta.persistence.*;
+-import org.springframework.stereotype.Component;
+-
+-@Entity
+-@Table(name="ratings")
+-public class SecuritySummary {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    @Column(name = "id")
+-    private Long id;
+-    private String projectKey;
+-    private String summary;
+-
+-    public void setProjectKey(String sonarqubeProjectKey) {
+-    }
+-
+-    public void setSummary(String owaspSummary) {
+-    }
+-
+-    // Getters and setters
+-
+-    public Long getId() {
+-        return id;
+-    }
+-
+-    public void setId(Long id) {
+-        this.id = id;
+-    }
+-
+-    public String getProjectKey() {
+-        return projectKey;
+-    }
+-
+-    public String getSummary() {
+-        return summary;
+-    }
+-}
+Index: microservice/src/main/resources/public/style.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Reset default styles */\r\nhtml, body, header, main, ol, li, h1, h2, p {\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Set a default font family and size */\r\nbody {\r\n    font-family: Arial, sans-serif;\r\n    font-size: 16px;\r\n}\r\n\r\n/* Header styles */\r\nheader {\r\n    background-color: #333;\r\n    color: #fff;\r\n    padding: 20px;\r\n}\r\n\r\n.topTen{\r\n\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    height: 100vh; /* Adjust as needed */\r\n}\r\n\r\nh1 {\r\n    font-size: 24px;\r\n    text-align: center;\r\n}\r\n\r\n/* Main content styles */\r\nmain {\r\n    margin: 20px;\r\n}\r\n\r\nol {\r\n    list-style-type: decimal;\r\n    margin-top: 20px;\r\n}\r\n\r\nli {\r\n    margin-bottom: 20px;\r\n}\r\n\r\nh2 {\r\n    font-size: 20px;\r\n}\r\n\r\np {\r\n    margin-top: 10px;\r\n}\r\n.rating div {\r\n    display: inline-block;\r\n    width: 20px;\r\n    height: 20px;\r\n    border-radius: 50%;\r\n    text-align: center;\r\n    line-height: 20px;\r\n}\r\n\r\n/* Responsive styles */\r\n@media (max-width: 600px) {\r\n    h1 {\r\n        font-size: 20px;\r\n    }\r\n\r\n    h2 {\r\n        font-size: 18px;\r\n    }\r\n\r\n    p {\r\n        font-size: 14px;\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/resources/public/style.css b/microservice/src/main/resources/public/style.css
+--- a/microservice/src/main/resources/public/style.css	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/main/resources/public/style.css	(date 1684939523149)
+@@ -18,11 +18,11 @@
+ }
+ 
+ .topTen{
+-
+     display: flex;
+-    justify-content: center;
++    justify-content: flex-end;
+     align-items: center;
+     height: 100vh; /* Adjust as needed */
++    width:60%
+ }
+ 
+ h1 {
+Index: microservice/src/test/java/com/ericsson/controller/WebControllerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/test/java/com/ericsson/controller/WebControllerTest.java b/microservice/src/test/java/com/ericsson/controller/WebControllerTest.java
+new file mode 100644
+--- /dev/null	(date 1684939523118)
++++ b/microservice/src/test/java/com/ericsson/controller/WebControllerTest.java	(date 1684939523118)
+@@ -0,0 +1,185 @@
++package com.ericsson.controller;
++
++import com.ericsson.entity.Hotspot;
++import com.ericsson.entity.SecurityHistory;
++import com.ericsson.service.HotspotClassifier;
++import com.ericsson.service.SonarQubeService;
++import com.ericsson.entity.ClassifiedHotspots;
++import com.ericsson.repository.SecuityHistoryJPA;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mock;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
++import org.springframework.boot.test.context.SpringBootTest;
++import org.springframework.boot.test.mock.mockito.MockBean;
++import org.springframework.test.web.servlet.MockMvc;
++import org.springframework.test.web.servlet.MvcResult;
++
++import java.util.Collections;
++import java.util.List;
++
++
++import static org.hamcrest.Matchers.is;
++import static org.mockito.Mockito.*;
++import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
++import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
++import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
++
++@SpringBootTest
++@AutoConfigureMockMvc
++public class WebControllerTest {
++
++    @Autowired
++    private MockMvc mockMvc;
++
++    @MockBean
++    private SonarQubeService sonarQubeService;
++
++    @MockBean
++    private ClassifiedHotspots classifiedHotspots;
++
++    @MockBean
++    private SecuityHistoryJPA secuityHistoryJPA;
++
++    @MockBean
++    private HotspotClassifier hotspotClassifier;
++
++    private List<Hotspot> hotspotList;
++    private List<SecurityHistory> securityHistoryList;
++
++    @BeforeEach
++    public void setup() {
++        // Mock data setup
++        hotspotList = Collections.singletonList(new Hotspot());
++        securityHistoryList = Collections.singletonList(new SecurityHistory());
++    }
++
++    @Test
++    public void testGetOwasp1() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp1"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[{\"key\":null,\"component\":null,\"project\":null,\"securityCategory\":null,\"vulnerabilityProbability\":null,\"status\":null,\"line\":0,\"message\":null,\"author\":null,\"creationDate\":null,\"updateDate\":null,\"textRange\":null,\"flows\":null,\"ruleKey\":null}]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp2() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp2"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp3() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp3"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp4() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp4"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp5() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp5"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp6() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp6"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp7() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp7"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp8() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp8"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp9() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp9"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++    @Test
++    public void testGetOwasp10() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/owasp10"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[]")); // expected to return list of Hotspots in JSON format
++    }
++
++
++    @Test
++    public void testGetOwaspAll() throws Exception {
++        when(classifiedHotspots.getOwaspa1()).thenReturn(hotspotList);
++
++        mockMvc.perform(get("/api/v1/all"))
++                .andExpect(status().isOk())
++                .andExpect(content().string("")); // expected to return list of Hotspots in JSON format
++    }
++
++
++    @Test
++    public void testClassify() throws Exception {
++        mockMvc.perform(post("/classify"))
++                .andExpect(status().isOk());
++
++        verify(hotspotClassifier, times(1)).classify();
++    }
++
++    @Test
++    public void testGetRating() throws Exception {
++        String expectedRating = "5.0";
++        when(sonarQubeService.getSecurityReviewRating()).thenReturn(expectedRating);
++
++        mockMvc.perform(get("/api/v1/rating"))
++                .andExpect(status().isOk())
++                .andExpect(content().string(expectedRating));
++    }
++
++    @Test
++    public void testGetLastFive() throws Exception {
++        when(secuityHistoryJPA.findTop5ByOrderByDatetimeDesc()).thenReturn(securityHistoryList);
++
++        mockMvc.perform(get("/api/v1/repo"))
++                .andExpect(status().isOk())
++                .andExpect(content().json("[{\"id\":null,\"proj_name\":null,\"datetime\":null,\"owasp1_count\":null,\"owasp2_count\":null,\"owasp3_count\":null,\"owasp4_count\":null,\"owasp5_count\":null,\"owasp6_count\":null,\"owasp7_count\":null,\"owasp8_count\":null,\"owasp9_count\":null,\"owasp10_count\":null,\"cest_count\":null,\"cwe_count\":null}]")); // expected to return list of SecurityHistory in JSON format
++    }
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"377e0f65-ecc1-4c5a-bd8b-69f94be42722\" name=\"Changes\" comment=\"More great code\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/resources/public/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/resources/public/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/resources/public/script.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/resources/public/script.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/resources/public/style.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/resources/public/style.css\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"development\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"ROOT_SYNC\" value=\"DONT_SYNC\" />\r\n  </component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"development\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486897\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"main\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486896\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Q0OaBcUcTmTpRUV7lQcVCmy383\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,\r\n    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,\r\n    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,\r\n    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;spring.configuration.checksum&quot;: &quot;c38d2554a47067dba649709913530e2a&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.ericsson\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.MicroserviceApplication\">\r\n    <configuration name=\"generated-requests | #1\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" requestIdentifier=\"#1\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"generated-requests | #2\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" index=\"2\" requestIdentifier=\"#2\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"MicroserviceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\r\n      <module name=\"microservice\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.ericsson.MicroserviceApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"HTTP Request.generated-requests | #1\" />\r\n        <item itemvalue=\"HTTP Request.generated-requests | #2\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"377e0f65-ecc1-4c5a-bd8b-69f94be42722\" name=\"Changes\" comment=\"Service\" />\r\n      <created>1684487098006</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1684486876411</updated>\r\n      <workItem from=\"1684486878242\" duration=\"2957000\" />\r\n      <workItem from=\"1684769552343\" duration=\"524000\" />\r\n      <workItem from=\"1684831741203\" duration=\"15912000\" />\r\n      <workItem from=\"1684916880691\" duration=\"6690000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Initial commit.\">\r\n      <created>1684487102737</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487102737</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Initial commit.\">\r\n      <created>1684487192980</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487192980</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Initial commit.\">\r\n      <created>1684487552471</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487552471</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Service\">\r\n      <created>1684748203158</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684748203158</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Service\">\r\n      <created>1684754412095</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684754412095</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Service\">\r\n      <created>1684760435154</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684760435154</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Service\">\r\n      <created>1684762610046</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684762610046</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Some more rules and refactoring to fit Hotspot DOM\">\r\n      <created>1684838411961</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684838411961</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"More great code\">\r\n      <created>1684850737133</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684850737133</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"More great code\">\r\n      <created>1684854161892</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684854161892</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"11\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Service\" />\r\n    <MESSAGE value=\"Some more rules and refactoring to fit Hotspot DOM\" />\r\n    <MESSAGE value=\"More great code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"More great code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/.idea/workspace.xml	(date 1684939616067)
+@@ -5,10 +5,18 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="More great code">
++      <change afterPath="$PROJECT_DIR$/microservice/src/test/java/com/ericsson/controller/WebControllerTest.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Hotspot.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Hotspot.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecuritySummary.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuritySummaryRepository.java" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/style.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/test/java/com/ericsson/controller/WebControllerTests.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/test/java/com/ericsson/service/SonarQubeServiceTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/target/classes/public/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/target/classes/public/style.css" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -19,6 +27,7 @@
+     <option name="RECENT_TEMPLATES">
+       <list>
+         <option value="Class" />
++        <option value="JUnit5 Test Class" />
+       </list>
+     </option>
+   </component>
+@@ -83,6 +92,8 @@
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
++    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+     &quot;last_opened_file_path&quot;: &quot;C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml&quot;,
+     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+@@ -95,16 +106,93 @@
+   }
+ }</component>
+   <component name="RecentsManager">
++    <key name="CreateTestDialog.Recents.Supers">
++      <recent name="" />
++    </key>
+     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
++      <recent name="com.ericsson.controller" />
+       <recent name="com.ericsson" />
++    </key>
++    <key name="CreateTestDialog.RecentsKey">
++      <recent name="com.ericsson.service" />
++      <recent name="com.ericsson.controller" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="Spring Boot.MicroserviceApplication">
+-    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" requestIdentifier="#1" runType="Run single request">
+-      <method v="2" />
++  <component name="RunManager" selected="JUnit.All in microservice">
++    <configuration name="All in microservice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="microservice" />
++      <option name="PACKAGE_NAME" value="" />
++      <option name="TEST_OBJECT" value="package" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="SonarQubeServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="microservice" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.ericsson.service.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="com.ericsson.service" />
++      <option name="MAIN_CLASS_NAME" value="com.ericsson.service.SonarQubeServiceTest" />
++      <option name="TEST_OBJECT" value="class" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="WebControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="microservice" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.ericsson.controller.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++        <pattern>
++          <option name="PATTERN" value="*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
++      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
++      <option name="METHOD_NAME" value="" />
++      <option name="TEST_OBJECT" value="class" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="WebControllerTest.testGetLastFive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="microservice" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.ericsson.controller.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
++      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
++      <option name="METHOD_NAME" value="testGetLastFive" />
++      <option name="TEST_OBJECT" value="method" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
+     </configuration>
+-    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" requestIdentifier="#2" runType="Run single request">
+-      <method v="2" />
++    <configuration name="WebControllerTest.testGetOwaspAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="microservice" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.ericsson.controller.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
++      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
++      <option name="METHOD_NAME" value="testGetOwaspAll" />
++      <option name="TEST_OBJECT" value="method" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
+     </configuration>
+     <configuration name="MicroserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+       <module name="microservice" />
+@@ -115,8 +203,11 @@
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="HTTP Request.generated-requests | #1" />
+-        <item itemvalue="HTTP Request.generated-requests | #2" />
++        <item itemvalue="JUnit.All in microservice" />
++        <item itemvalue="JUnit.SonarQubeServiceTest" />
++        <item itemvalue="JUnit.WebControllerTest" />
++        <item itemvalue="JUnit.WebControllerTest.testGetOwaspAll" />
++        <item itemvalue="JUnit.WebControllerTest.testGetLastFive" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -131,7 +222,7 @@
+       <workItem from="1684486878242" duration="2957000" />
+       <workItem from="1684769552343" duration="524000" />
+       <workItem from="1684831741203" duration="15912000" />
+-      <workItem from="1684916880691" duration="6690000" />
++      <workItem from="1684916880691" duration="12394000" />
+     </task>
+     <task id="LOCAL-00001" summary="Initial commit.">
+       <created>1684487102737</created>
+@@ -203,7 +294,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1684854161892</updated>
+     </task>
+-    <option name="localTasksCounter" value="11" />
++    <task id="LOCAL-00011" summary="More great code">
++      <created>1684926591859</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1684926591860</updated>
++    </task>
++    <option name="localTasksCounter" value="12" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -238,4 +336,19 @@
+     <MESSAGE value="More great code" />
+     <option name="LAST_COMMIT_MESSAGE" value="More great code" />
+   </component>
++  <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/SonarQubers$WebControllerTest_testGetOwasp1.ic" NAME="WebControllerTest.testGetOwasp1 Coverage Results" MODIFIED="1684933002435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>com.ericsson.controller.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/SonarQubers$WebControllerTest.ic" NAME="WebControllerTest Coverage Results" MODIFIED="1684934126691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/SonarQubers$SonarQubeServiceTest.ic" NAME="SonarQubeServiceTest Coverage Results" MODIFIED="1684934720241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>com.ericsson.service.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/SonarQubers$WebControllerTest_testGetRating.ic" NAME="WebControllerTest.testGetRating Coverage Results" MODIFIED="1684933033881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
++      <FILTER>com.ericsson.controller.*</FILTER>
++    </SUITE>
++    <SUITE FILE_PATH="coverage/SonarQubers$All_in_microservice.ic" NAME="All in microservice Coverage Results" MODIFIED="1684934820145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: microservice/target/classes/public/style.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Reset default styles */\r\nhtml, body, header, main, ol, li, h1, h2, p {\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Set a default font family and size */\r\nbody {\r\n    font-family: Arial, sans-serif;\r\n    font-size: 16px;\r\n}\r\n\r\n/* Header styles */\r\nheader {\r\n    background-color: #333;\r\n    color: #fff;\r\n    padding: 20px;\r\n}\r\n\r\n.topTen{\r\n\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    height: 100vh; /* Adjust as needed */\r\n}\r\n\r\nh1 {\r\n    font-size: 24px;\r\n    text-align: center;\r\n}\r\n\r\n/* Main content styles */\r\nmain {\r\n    margin: 20px;\r\n}\r\n\r\nol {\r\n    list-style-type: decimal;\r\n    margin-top: 20px;\r\n}\r\n\r\nli {\r\n    margin-bottom: 20px;\r\n}\r\n\r\nh2 {\r\n    font-size: 20px;\r\n}\r\n\r\np {\r\n    margin-top: 10px;\r\n}\r\n\r\n/* Responsive styles */\r\n@media (max-width: 600px) {\r\n    h1 {\r\n        font-size: 20px;\r\n    }\r\n\r\n    h2 {\r\n        font-size: 18px;\r\n    }\r\n\r\n    p {\r\n        font-size: 14px;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/target/classes/public/style.css b/microservice/target/classes/public/style.css
+--- a/microservice/target/classes/public/style.css	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/target/classes/public/style.css	(date 1684939523163)
+@@ -18,11 +18,11 @@
+ }
+ 
+ .topTen{
+-
+     display: flex;
+-    justify-content: center;
++    justify-content: flex-end;
+     align-items: center;
+     height: 100vh; /* Adjust as needed */
++    width:60%
+ }
+ 
+ h1 {
+@@ -51,6 +51,14 @@
+ p {
+     margin-top: 10px;
+ }
++.rating div {
++    display: inline-block;
++    width: 20px;
++    height: 20px;
++    border-radius: 50%;
++    text-align: center;
++    line-height: 20px;
++}
+ 
+ /* Responsive styles */
+ @media (max-width: 600px) {
+@@ -65,4 +73,8 @@
+     p {
+         font-size: 14px;
+     }
++
++
+ }
++
++
+Index: microservice/src/main/java/com/ericsson/entity/Hotspot.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.entity;\r\n\r\nimport org.springframework.stereotype.Component;\r\n\r\nimport java.util.List;\r\n\r\n@Component\r\npublic class Hotspot {\r\n    private String key;\r\n    private String component;\r\n    private String project;\r\n    private String securityCategory;\r\n    private String vulnerabilityProbability;\r\n    private String status;\r\n    private int line;\r\n    private String message;\r\n    private String author;\r\n    private String creationDate;\r\n    private String updateDate;\r\n    private TextRange textRange;\r\n    private List<Flow> flows;\r\n    private String ruleKey;\r\n\r\n    // TODO: Add TextRange and Flow classes, or import if already defined\r\n\r\n    public String getKey() {\r\n        return key;\r\n    }\r\n\r\n    public void setKey(String key) {\r\n        this.key = key;\r\n    }\r\n\r\n    public String getComponent() {\r\n        return component;\r\n    }\r\n\r\n    public void setComponent(String component) {\r\n        this.component = component;\r\n    }\r\n\r\n    public String getProject() {\r\n        return project;\r\n    }\r\n\r\n    public void setProject(String project) {\r\n        this.project = project;\r\n    }\r\n\r\n    public String getSecurityCategory() {\r\n        return securityCategory;\r\n    }\r\n\r\n    public void setSecurityCategory(String securityCategory) {\r\n        this.securityCategory = securityCategory;\r\n    }\r\n\r\n    public String getVulnerabilityProbability() {\r\n        return vulnerabilityProbability;\r\n    }\r\n\r\n    public void setVulnerabilityProbability(String vulnerabilityProbability) {\r\n        this.vulnerabilityProbability = vulnerabilityProbability;\r\n    }\r\n\r\n    public String getStatus() {\r\n        return status;\r\n    }\r\n\r\n    public void setStatus(String status) {\r\n        this.status = status;\r\n    }\r\n\r\n    public int getLine() {\r\n        return line;\r\n    }\r\n\r\n    public void setLine(int line) {\r\n        this.line = line;\r\n    }\r\n\r\n    public String getMessage() {\r\n        return message;\r\n    }\r\n\r\n    public void setMessage(String message) {\r\n        this.message = message;\r\n    }\r\n\r\n    public String getAuthor() {\r\n        return author;\r\n    }\r\n\r\n    public void setAuthor(String author) {\r\n        this.author = author;\r\n    }\r\n\r\n    public String getCreationDate() {\r\n        return creationDate;\r\n    }\r\n\r\n    public void setCreationDate(String creationDate) {\r\n        this.creationDate = creationDate;\r\n    }\r\n\r\n    public String getUpdateDate() {\r\n        return updateDate;\r\n    }\r\n\r\n    public void setUpdateDate(String updateDate) {\r\n        this.updateDate = updateDate;\r\n    }\r\n\r\n    public TextRange getTextRange() {\r\n        return textRange;\r\n    }\r\n\r\n    public void setTextRange(TextRange textRange) {\r\n        this.textRange = textRange;\r\n    }\r\n\r\n    public List<Flow> getFlows() {\r\n        return flows;\r\n    }\r\n\r\n    public void setFlows(List<Flow> flows) {\r\n        this.flows = flows;\r\n    }\r\n\r\n    public String getRuleKey() {\r\n        return ruleKey;\r\n    }\r\n\r\n    public void setRuleKey(String ruleKey) {\r\n        this.ruleKey = ruleKey;\r\n    }\r\n\r\n\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Hotspot{\" +\r\n                \"key='\" + key + '\\'' +\r\n                \", component='\" + component + '\\'' +\r\n                \", project='\" + project + '\\'' +\r\n                \", securityCategory='\" + securityCategory + '\\'' +\r\n                \", vulnerabilityProbability='\" + vulnerabilityProbability + '\\'' +\r\n                \", status='\" + status + '\\'' +\r\n                \", line=\" + line +\r\n                \", message='\" + message + '\\'' +\r\n                \", author='\" + author + '\\'' +\r\n                \", creationDate='\" + creationDate + '\\'' +\r\n                \", updateDate='\" + updateDate + '\\'' +\r\n                \", textRange=\" + textRange +\r\n                \", flows=\" + flows +\r\n                \", ruleKey='\" + ruleKey + '\\'' +\r\n                '}';\r\n    }\r\n\r\n\r\n}\r\n\r\nclass TextRange {\r\n    private int startLine;\r\n    private int endLine;\r\n    private int startOffset;\r\n    private int endOffset;\r\n\r\n    public int getStartLine() {\r\n        return startLine;\r\n    }\r\n\r\n    public void setStartLine(int startLine) {\r\n        this.startLine = startLine;\r\n    }\r\n\r\n    public int getEndLine() {\r\n        return endLine;\r\n    }\r\n\r\n    public void setEndLine(int endLine) {\r\n        this.endLine = endLine;\r\n    }\r\n\r\n    public int getStartOffset() {\r\n        return startOffset;\r\n    }\r\n\r\n    public void setStartOffset(int startOffset) {\r\n        this.startOffset = startOffset;\r\n    }\r\n\r\n    public int getEndOffset() {\r\n        return endOffset;\r\n    }\r\n\r\n    public void setEndOffset(int endOffset) {\r\n        this.endOffset = endOffset;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"TextRange{\" +\r\n                \"startLine=\" + startLine +\r\n                \", endLine=\" + endLine +\r\n                \", startOffset=\" + startOffset +\r\n                \", endOffset=\" + endOffset +\r\n                '}';\r\n    }\r\n\r\n    // TODO: Generate getters and setters for each field\r\n}\r\n\r\nclass Flow {\r\n    private List<Location> locations;\r\n\r\n    public List<Location> getLocations() {\r\n        return locations;\r\n    }\r\n\r\n    public void setLocations(List<Location> locations) {\r\n        this.locations = locations;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Flow{\" +\r\n                \"locations=\" + locations +\r\n                '}';\r\n    }\r\n\r\n    // TODO: Generate getters and setters for each field\r\n}\r\n\r\nclass Location {\r\n    private String component;\r\n    private TextRange textRange;\r\n    private String msg;\r\n\r\n    public String getComponent() {\r\n        return component;\r\n    }\r\n\r\n    public void setComponent(String component) {\r\n        this.component = component;\r\n    }\r\n\r\n    public TextRange getTextRange() {\r\n        return textRange;\r\n    }\r\n\r\n    public void setTextRange(TextRange textRange) {\r\n        this.textRange = textRange;\r\n    }\r\n\r\n    public String getMsg() {\r\n        return msg;\r\n    }\r\n\r\n    public void setMsg(String msg) {\r\n        this.msg = msg;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Location{\" +\r\n                \"component='\" + component + '\\'' +\r\n                \", textRange=\" + textRange +\r\n                \", msg='\" + msg + '\\'' +\r\n                '}';\r\n    }\r\n\r\n    // TODO: Generate getters and setters for each field\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/Hotspot.java b/microservice/src/main/java/com/ericsson/entity/Hotspot.java
+--- a/microservice/src/main/java/com/ericsson/entity/Hotspot.java	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/main/java/com/ericsson/entity/Hotspot.java	(date 1684939523169)
+@@ -156,8 +156,6 @@
+                 ", ruleKey='" + ruleKey + '\'' +
+                 '}';
+     }
+-
+-
+ }
+ 
+ class TextRange {
+@@ -207,8 +205,6 @@
+                 ", endOffset=" + endOffset +
+                 '}';
+     }
+-
+-    // TODO: Generate getters and setters for each field
+ }
+ 
+ class Flow {
+@@ -228,8 +224,6 @@
+                 "locations=" + locations +
+                 '}';
+     }
+-
+-    // TODO: Generate getters and setters for each field
+ }
+ 
+ class Location {
+@@ -270,5 +264,5 @@
+                 '}';
+     }
+ 
+-    // TODO: Generate getters and setters for each field
++
+ }
+\ No newline at end of file
+Index: microservice/src/main/resources/public/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<style>.rating div {\r\n    display: inline-block;\r\n    width: 20px;\r\n    height: 20px;\r\n    border-radius: 50%;\r\n    text-align: center;\r\n    line-height: 20px;\r\n}\r\n\r\n.rating div.A {\r\n    background-color: green;\r\n}\r\n\r\n.rating div.B {\r\n    background-color: #ff8c00; /* orange */\r\n}\r\n\r\n.rating div.C {\r\n    background-color: orange;\r\n}\r\n\r\n.rating div.D {\r\n    background-color: #ff4500; /* blood orange */\r\n}\r\n\r\n.rating div.E {\r\n    background-color: red;\r\n}\r\n</style>\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>OWASP Top Ten Rules</title>\r\n    <link rel=\"stylesheet\" href=\"style.css\">\r\n    <script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>\r\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\r\n</head>\r\n\r\n<body>\r\n<header>\r\n    <h1>OWASP Top Ten Rules</h1>\r\n</header>\r\n\r\n<main>\r\n    <br>\r\n    <br>\r\n    <div> <h3> Overall Security Rating of the Repository : </h3> <p class = \"rating\" id = \"ratingOverAll\"></p></div>\r\n    <div class = \"topTen\">\r\n    <ol>\r\n        <li id=\"step1\">\r\n            <h2>A1:  Broken Access Control</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step2\">\r\n            <h2>A2: Cryptographic Failures</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step3\">\r\n            <h2>A3: Injection</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step4\">\r\n            <h2>A4:Insecure Design</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step5\">\r\n            <h2>A5:Security Misconfiguration</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step6\">\r\n            <h2>A6: Vulnerable and Outdated Components</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step7\">\r\n            <h2>A7: Identifaction And Authentication Failures (XSS)</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step8\">\r\n            <h2>A8: Software and Data Integrity Failures</h2>\r\n            <p></p>\r\n        </li>\r\n        <li id=\"step9\">\r\n            <h2>A9: Security Logging and Monitoring Failures</h2>\r\n            <p>Keep all components (libraries, frameworks, etc.) up to date and patch known vulnerabilities in a timely manner.</p>\r\n        </li>\r\n        <li id=\"step10\">\r\n            <h2>A10: Server Side Request Forgery</h2>\r\n            <p>Implement proper logging and monitoring to detect and respond to security events and incidents in a timely manner.</p>\r\n        </li>\r\n    </ol>\r\n    </div>\r\n\r\n    <div>\r\n        <canvas id=\"myChartLine\" width=\"400px\" height=\"400px\" style=\"background-color:rgb(255, 255, 255, 0.3);\"></canvas>\r\n    </div>\r\n</main>\r\n\r\n<script src=\"script.js\"></script>\r\n</body>\r\n\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/resources/public/index.html b/microservice/src/main/resources/public/index.html
+--- a/microservice/src/main/resources/public/index.html	(revision d79553a74c5023c81af7599eefcf4da42c8bb218)
++++ b/microservice/src/main/resources/public/index.html	(date 1684939523177)
+@@ -7,6 +7,8 @@
+     border-radius: 50%;
+     text-align: center;
+     line-height: 20px;
++    position: relative;
++    right: 0;
+ }
+ 
+ .rating div.A {

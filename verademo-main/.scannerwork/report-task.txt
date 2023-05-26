@@ -1,0 +1,6 @@
+projectKey=vuln_project
+serverUrl=http://sonarqube:9000
+serverVersion=10.0.0.68432
+dashboardUrl=http://sonarqube:9000/dashboard?id=vuln_project
+ceTaskId=AYhTeRuGajC83d_XFBeI
+ceTaskUrl=http://sonarqube:9000/api/ce/task?id=AYhTeRuGajC83d_XFBeI

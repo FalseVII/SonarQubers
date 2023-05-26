@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="More great code">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dockerfiles/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dockerfiles/sql_scripts/init.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservice/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +25,7 @@
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="JavaScript File" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -101,6 +107,9 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\false\IdeaProjects\SonarQubers\dockerfiles\scan_app" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.ericsson.controller" />
       <recent name="com.ericsson" />
@@ -110,82 +119,7 @@
       <recent name="com.ericsson.controller" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MicroserviceApplication">
-    <configuration name="All in microservice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="microservice" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SonarQubeServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="microservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ericsson.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.ericsson.service" />
-      <option name="MAIN_CLASS_NAME" value="com.ericsson.service.SonarQubeServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WebControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="microservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ericsson.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-        <pattern>
-          <option name="PATTERN" value="*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WebControllerTest.testGetLastFive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="microservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ericsson.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
-      <option name="METHOD_NAME" value="testGetLastFive" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WebControllerTest.testGetOwaspAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="microservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ericsson.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.ericsson.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.ericsson.controller.WebControllerTest" />
-      <option name="METHOD_NAME" value="testGetOwaspAll" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Docker.docker-compose.yml.app: Compose Deployment">
     <configuration name="MicroserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="microservice" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ericsson.MicroserviceApplication" />
@@ -193,13 +127,80 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="app/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="dockerfiles/scan_app/verademo-main/app/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.app: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="app" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.sonar-scanner: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="sonar-scanner" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.sonarqube: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="sonarqube" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in microservice" />
-        <item itemvalue="JUnit.SonarQubeServiceTest" />
-        <item itemvalue="JUnit.WebControllerTest" />
-        <item itemvalue="JUnit.WebControllerTest.testGetOwaspAll" />
-        <item itemvalue="JUnit.WebControllerTest.testGetLastFive" />
+        <item itemvalue="Docker.docker-compose.yml.app: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.sonar-scanner: Compose Deployment" />
+        <item itemvalue="Docker.app/Dockerfile" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.sonarqube: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -216,7 +217,8 @@
       <workItem from="1684831741203" duration="15912000" />
       <workItem from="1684916880691" duration="12667000" />
       <workItem from="1684947884590" duration="9502000" />
-      <workItem from="1685002160329" duration="4534000" />
+      <workItem from="1685002160329" duration="6562000" />
+      <workItem from="1685020225673" duration="11111000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1684487102737</created>
@@ -302,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685009151306</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="More great code">
+      <created>1685018547805</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1685018547805</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,6 +345,17 @@
     <MESSAGE value="Some more rules and refactoring to fit Hotspot DOM" />
     <MESSAGE value="More great code" />
     <option name="LAST_COMMIT_MESSAGE" value="More great code" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SonarQubers$WebControllerTest_testGetOwasp1.ic" NAME="WebControllerTest.testGetOwasp1 Coverage Results" MODIFIED="1684933002435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

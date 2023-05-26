@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    networks:
+      - my-network
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: security_summary_db
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./sql_scripts:/docker-entrypoint-initdb.d
+    restart: always
+
+  sonarqube:
+    image: sonarqube:latest
+    networks:
+      - my-network
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+    restart: always
+
+  app:
+    build:
+      context: ./microservice
+      dockerfile: Dockerfile
+    networks:
+      - my-network
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - sonarqube
+    restart: always
+
+
+  sonar-scanner:
+    build:
+      context: ./dockerfiles/scan_app/verademo-main/app
+      dockerfile: Dockerfile
+    volumes:
+      - ./verademo-main:/verademo-main
+    environment:
+      - SONAR_HOST_URL=http://sonarqube:9000
+      - SONAR_TOKEN=sqp_f9cafc4847649fabac934554c5d337c4d439da1c
+      - SONAR_PROJECT_KEY=vuln_project
+      - SONARQUBE_WEB_JVM_OPTS=-Dsonar.sources=/src
+    networks:
+      - my-network
+    depends_on:
+      - db
+      - sonarqube
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:

@@ -1,0 +1,1474 @@
+Index: microservice/src/main/java/com/ericsson/service/SonarQubeService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.service;\r\n\r\n\r\nimport com.ericsson.entity.Issue;\r\nimport com.ericsson.entity.IssuesResponse;\r\nimport org.springframework.http.*;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.web.client.RestTemplate;\r\n\r\nimport java.util.Base64;\r\nimport java.util.List;\r\n\r\n@Service\r\npublic class SonarQubeService {\r\n    private RestTemplate restTemplate = new RestTemplate();\r\n\r\n    public List<Issue> getIssues() {\r\n        final String uri = \"http://localhost:9000/api/issues/search?componentKeys=vuln_project\";\r\n\r\n        HttpHeaders headers = new HttpHeaders();\r\n        headers.set(\"Authorization\", \"Bearer squ_6cbb1583369b6964f49f60d705eb989ddd678fdb\");\r\n        headers.set(\"Accept\", MediaType.APPLICATION_JSON_VALUE);\r\n        HttpEntity<String> entity = new HttpEntity<>(\"parameters\", headers);\r\n\r\n        ResponseEntity<IssuesResponse> response = restTemplate.exchange(uri, HttpMethod.GET, entity, IssuesResponse.class);\r\n        return response.getBody().getIssues();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/service/SonarQubeService.java b/microservice/src/main/java/com/ericsson/service/SonarQubeService.java
+--- a/microservice/src/main/java/com/ericsson/service/SonarQubeService.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ b/microservice/src/main/java/com/ericsson/service/SonarQubeService.java	(date 1684837004356)
+@@ -1,8 +1,8 @@
+ package com.ericsson.service;
+ 
+ 
+-import com.ericsson.entity.Issue;
+-import com.ericsson.entity.IssuesResponse;
++import com.ericsson.entity.Hotspot;
++import com.ericsson.entity.HotspotResponse;
+ import org.springframework.http.*;
+ import org.springframework.stereotype.Service;
+ import org.springframework.web.client.RestTemplate;
+@@ -14,15 +14,28 @@
+ public class SonarQubeService {
+     private RestTemplate restTemplate = new RestTemplate();
+ 
+-    public List<Issue> getIssues() {
+-        final String uri = "http://localhost:9000/api/issues/search?componentKeys=vuln_project";
++    public List<Hotspot> getIssues() {
++        RestTemplate restTemplate = new RestTemplate();
+ 
++        //add header
+         HttpHeaders headers = new HttpHeaders();
+-        headers.set("Authorization", "Bearer squ_6cbb1583369b6964f49f60d705eb989ddd678fdb");
+-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
++        headers.setContentType(MediaType.APPLICATION_JSON);
++        headers.set("Authorization", "Bearer squ_4d75bfdf908f2b1377e2e4ee86ae18777b4b9fac" );
++
++        String apiUrl = "http://localhost:9000/api/hotspots/search?projectKey=vuln_project";
++
++        // You can add parameters to your URL if needed
++
++        //add headers
++        HttpEntity<String> entity = new HttpEntity<String>(headers);
++
++        // Send the request as GET
+ 
+-        ResponseEntity<IssuesResponse> response = restTemplate.exchange(uri, HttpMethod.GET, entity, IssuesResponse.class);
+-        return response.getBody().getIssues();
++        ResponseEntity<HotspotResponse> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, HotspotResponse.class);
++
++        // Extract the hotspots from the response
++        List<Hotspot> hotspots = response.getBody().getHotspots();
++
++        return hotspots;
+     }
+ }
+\ No newline at end of file
+Index: microservice/src/main/java/com/ericsson/controller/WebController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.controller;\r\n\r\nimport com.ericsson.entity.Issue;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PostMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\npublic class WebController {\r\n\r\n    @Autowired\r\n    private com.ericsson.service.SonarQubeService sonarQubeService;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.IssuesResponse issuesResponse;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.Issue issue;\r\n\r\n    @Autowired\r\n    private com.ericsson.service.IssueClassifier issueClassifier;\r\n\r\n    @Autowired\r\n    private com.ericsson.entity.ClassifiedIssues classifiedIssues;\r\n\r\n\r\n\r\n    @PostMapping(value = \"/classify\")\r\n    public void classify() {\r\n        issueClassifier.classify();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp1\")\r\n    public List<Issue> getOwasp1() {\r\n        return classifiedIssues.getOwaspa1();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp2\")\r\n    public List<Issue> getOwasp2() {\r\n        return classifiedIssues.getOwaspa2();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp3\")\r\n    public List<Issue> getOwasp3() {\r\n        return classifiedIssues.getOwaspa3();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp4\")\r\n    public List<Issue> getOwasp4() {\r\n        return classifiedIssues.getOwaspa4();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp5\")\r\n    public List<Issue> getOwasp5() {\r\n        return classifiedIssues.getOwaspa5();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp6\")\r\n    public List<Issue> getOwasp6() {\r\n        return classifiedIssues.getOwaspa6();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp7\")\r\n    public List<Issue> getOwasp7() {\r\n        return classifiedIssues.getOwaspa7();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp8\")\r\n    public List<Issue> getOwasp8() {\r\n        return classifiedIssues.getOwaspa8();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp9\")\r\n    public List<Issue> getOwasp9() {\r\n        return classifiedIssues.getOwaspa9();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/owasp10\")\r\n    public List<Issue> getOwasp10() {\r\n        return classifiedIssues.getOwaspa10();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/cest\")\r\n    public List<Issue> getCest() {\r\n        return classifiedIssues.getCest();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/cwe\")\r\n    public List<Issue> getCwe() {\r\n        return classifiedIssues.getCwe();\r\n    }\r\n\r\n    @GetMapping(value = \"/api/v1/all\")\r\n    public List<Issue> getAll() {\r\n        return issuesResponse.getIssues();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/controller/WebController.java b/microservice/src/main/java/com/ericsson/controller/WebController.java
+--- a/microservice/src/main/java/com/ericsson/controller/WebController.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ b/microservice/src/main/java/com/ericsson/controller/WebController.java	(date 1684836766722)
+@@ -1,8 +1,8 @@
+ package com.ericsson.controller;
+ 
+-import com.ericsson.entity.Issue;
++import com.ericsson.entity.Hotspot;
++import com.ericsson.entity.Hotspot;
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Controller;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.bind.annotation.RestController;
+@@ -16,86 +16,86 @@
+     private com.ericsson.service.SonarQubeService sonarQubeService;
+ 
+     @Autowired
+-    private com.ericsson.entity.IssuesResponse issuesResponse;
++    private com.ericsson.entity.HotspotResponse hotspotResponse;
+ 
+     @Autowired
+-    private com.ericsson.entity.Issue issue;
++    private com.ericsson.entity.Hotspot Hotspot;
+ 
+     @Autowired
+-    private com.ericsson.service.IssueClassifier issueClassifier;
++    private com.ericsson.service.HotspotClassifier HotspotClassifier;
+ 
+     @Autowired
+-    private com.ericsson.entity.ClassifiedIssues classifiedIssues;
++    private com.ericsson.entity.ClassifiedHotspots classifiedHotspots;
+ 
+ 
+ 
+     @PostMapping(value = "/classify")
+     public void classify() {
+-        issueClassifier.classify();
++        HotspotClassifier.classify();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp1")
+-    public List<Issue> getOwasp1() {
+-        return classifiedIssues.getOwaspa1();
++    public List<Hotspot> getOwasp1() {
++        return classifiedHotspots.getOwaspa1();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp2")
+-    public List<Issue> getOwasp2() {
+-        return classifiedIssues.getOwaspa2();
++    public List<Hotspot> getOwasp2() {
++        return classifiedHotspots.getOwaspa2();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp3")
+-    public List<Issue> getOwasp3() {
+-        return classifiedIssues.getOwaspa3();
++    public List<Hotspot> getOwasp3() {
++        return classifiedHotspots.getOwaspa3();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp4")
+-    public List<Issue> getOwasp4() {
+-        return classifiedIssues.getOwaspa4();
++    public List<Hotspot> getOwasp4() {
++        return classifiedHotspots.getOwaspa4();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp5")
+-    public List<Issue> getOwasp5() {
+-        return classifiedIssues.getOwaspa5();
++    public List<Hotspot> getOwasp5() {
++        return classifiedHotspots.getOwaspa5();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp6")
+-    public List<Issue> getOwasp6() {
+-        return classifiedIssues.getOwaspa6();
++    public List<Hotspot> getOwasp6() {
++        return classifiedHotspots.getOwaspa6();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp7")
+-    public List<Issue> getOwasp7() {
+-        return classifiedIssues.getOwaspa7();
++    public List<Hotspot> getOwasp7() {
++        return classifiedHotspots.getOwaspa7();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp8")
+-    public List<Issue> getOwasp8() {
+-        return classifiedIssues.getOwaspa8();
++    public List<Hotspot> getOwasp8() {
++        return classifiedHotspots.getOwaspa8();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp9")
+-    public List<Issue> getOwasp9() {
+-        return classifiedIssues.getOwaspa9();
++    public List<Hotspot> getOwasp9() {
++        return classifiedHotspots.getOwaspa9();
+     }
+ 
+     @GetMapping(value = "/api/v1/owasp10")
+-    public List<Issue> getOwasp10() {
+-        return classifiedIssues.getOwaspa10();
++    public List<Hotspot> getOwasp10() {
++        return classifiedHotspots.getOwaspa10();
+     }
+ 
+     @GetMapping(value = "/api/v1/cest")
+-    public List<Issue> getCest() {
+-        return classifiedIssues.getCest();
++    public List<Hotspot> getCest() {
++        return classifiedHotspots.getCest();
+     }
+ 
+     @GetMapping(value = "/api/v1/cwe")
+-    public List<Issue> getCwe() {
+-        return classifiedIssues.getCwe();
++    public List<Hotspot> getCwe() {
++        return classifiedHotspots.getCwe();
+     }
+ 
+     @GetMapping(value = "/api/v1/all")
+-    public List<Issue> getAll() {
+-        return issuesResponse.getIssues();
++    public List<Hotspot> getAll() {
++        return hotspotResponse.getHotspots();
+     }
+ }
+Index: microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java b/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ /dev/null	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
+@@ -1,120 +0,0 @@
+-package com.ericsson.entity;
+-
+-import jakarta.persistence.Entity;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Component;
+-
+-import java.util.List;
+-
+-@Component
+-public class ClassifiedIssues {
+-
+-    List<Issue> owaspa1;
+-    List<Issue> owaspa2;
+-    List<Issue> owaspa3;
+-    List<Issue> owaspa4;
+-    List<Issue> owaspa5;
+-    List<Issue> owaspa6;
+-    List<Issue> owaspa7;
+-    List<Issue> owaspa8;
+-    List<Issue> owaspa9;
+-    List<Issue> owaspa10;
+-    List<Issue> cest;
+-    List<Issue> cwe;
+-
+-    public List<Issue> getOwaspa1() {
+-        return owaspa1;
+-    }
+-
+-    public void setOwaspa1(List<Issue> owaspa1) {
+-        this.owaspa1 = owaspa1;
+-    }
+-
+-    public List<Issue> getOwaspa2() {
+-        return owaspa2;
+-    }
+-
+-    public void setOwaspa2(List<Issue> owaspa2) {
+-        this.owaspa2 = owaspa2;
+-    }
+-
+-    public List<Issue> getOwaspa3() {
+-        return owaspa3;
+-    }
+-
+-    public void setOwaspa3(List<Issue> owaspa3) {
+-        this.owaspa3 = owaspa3;
+-    }
+-
+-    public List<Issue> getOwaspa4() {
+-        return owaspa4;
+-    }
+-
+-    public void setOwaspa4(List<Issue> owaspa4) {
+-        this.owaspa4 = owaspa4;
+-    }
+-
+-    public List<Issue> getOwaspa5() {
+-        return owaspa5;
+-    }
+-
+-    public void setOwaspa5(List<Issue> owaspa5) {
+-        this.owaspa5 = owaspa5;
+-    }
+-
+-    public List<Issue> getOwaspa6() {
+-        return owaspa6;
+-    }
+-
+-    public void setOwaspa6(List<Issue> owaspa6) {
+-        this.owaspa6 = owaspa6;
+-    }
+-
+-    public List<Issue> getOwaspa7() {
+-        return owaspa7;
+-    }
+-
+-    public void setOwaspa7(List<Issue> owaspa7) {
+-        this.owaspa7 = owaspa7;
+-    }
+-
+-    public List<Issue> getOwaspa8() {
+-        return owaspa8;
+-    }
+-
+-    public void setOwaspa8(List<Issue> owaspa8) {
+-        this.owaspa8 = owaspa8;
+-    }
+-
+-    public List<Issue> getOwaspa9() {
+-        return owaspa9;
+-    }
+-
+-    public void setOwaspa9(List<Issue> owaspa9) {
+-        this.owaspa9 = owaspa9;
+-    }
+-
+-    public List<Issue> getOwaspa10() {
+-        return owaspa10;
+-    }
+-
+-    public void setOwaspa10(List<Issue> owaspa10) {
+-        this.owaspa10 = owaspa10;
+-    }
+-
+-    public List<Issue> getCest() {
+-        return cest;
+-    }
+-
+-    public void setCest(List<Issue> cest) {
+-        this.cest = cest;
+-    }
+-
+-    public List<Issue> getCwe() {
+-        return cwe;
+-    }
+-
+-    public void setCwe(List<Issue> cwe) {
+-        this.cwe = cwe;
+-    }
+-}
+Index: microservice/src/main/java/com/ericsson/service/IssueClassifier.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/service/IssueClassifier.java b/microservice/src/main/java/com/ericsson/service/IssueClassifier.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/service/IssueClassifier.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ /dev/null	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
+@@ -1,91 +0,0 @@
+-package com.ericsson.service;
+-
+-import com.ericsson.entity.ClassifiedIssues;
+-import com.ericsson.entity.Issue;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-@Service
+-public class IssueClassifier {
+-
+-    @Autowired
+-    private com.ericsson.entity.IssuesResponse issuesResponse;
+-
+-    @Autowired
+-    private com.ericsson.entity.Issue issue;
+-
+-    @Autowired
+-    private com.ericsson.service.SonarQubeService sonarQubeService;
+-
+-    @Autowired
+-    private com.ericsson.entity.ClassifiedIssues classifiedIssues;
+-
+-    public void classify() {
+-        List<Issue> owaspa1 = new ArrayList<>();
+-        List<Issue> owaspa2 = new ArrayList<>();
+-        List<Issue> owaspa3 = new ArrayList<>();
+-        List<Issue> owaspa4 = new ArrayList<>();
+-        List<Issue> owaspa5 = new ArrayList<>();
+-        List<Issue> owaspa6 = new ArrayList<>();
+-        List<Issue> owaspa7 = new ArrayList<>();
+-        List<Issue> owaspa8 = new ArrayList<>();
+-        List<Issue> owaspa9 = new ArrayList<>();
+-        List<Issue> owaspa10 = new ArrayList<>();
+-        List<Issue> cest = new ArrayList<>();
+-        List<Issue> cwe = new ArrayList<>();
+-        for (com.ericsson.entity.Issue issue : sonarQubeService.getIssues()) {
+-            if (issue.getTags().contains("cwe")) {
+-                cwe.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a1")) {
+-                owaspa1.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a2")) {
+-                owaspa2.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a3")) {
+-                owaspa3.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a4")) {
+-                owaspa4.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a5")) {
+-                owaspa5.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a6")) {
+-                owaspa6.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a7")) {
+-                owaspa7.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a8")) {
+-                owaspa8.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a9")) {
+-                owaspa9.add(issue);
+-            }
+-            if (issue.getTags().contains("owasp-a10")) {
+-                owaspa10.add(issue);
+-            }
+-            if (issue.getTags().contains("cest")) {
+-                cest.add(issue);
+-            }
+-        }
+-        classifiedIssues.setOwaspa1(owaspa1);
+-        classifiedIssues.setOwaspa2(owaspa2);
+-        classifiedIssues.setOwaspa3(owaspa3);
+-        classifiedIssues.setOwaspa4(owaspa4);
+-        classifiedIssues.setOwaspa5(owaspa5);
+-        classifiedIssues.setOwaspa6(owaspa6);
+-        classifiedIssues.setOwaspa7(owaspa7);
+-        classifiedIssues.setOwaspa8(owaspa8);
+-        classifiedIssues.setOwaspa9(owaspa9);
+-        classifiedIssues.setOwaspa10(owaspa10);
+-        classifiedIssues.setCest(cest);
+-        classifiedIssues.setCwe(cwe);
+-        System.out.println("Classified issues");
+-    }
+-}
+Index: microservice/src/main/java/com/ericsson/entity/Issue.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/Issue.java b/microservice/src/main/java/com/ericsson/entity/Issue.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/entity/Issue.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ /dev/null	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
+@@ -1,106 +0,0 @@
+-package com.ericsson.entity;
+-
+-import org.springframework.stereotype.Component;
+-
+-import java.util.List;
+-
+-@Component
+-public class Issue {
+-    private String key;
+-    private String rule;
+-    private String severity;
+-    private String component;
+-    private String project;
+-    private int line;
+-    private String status;
+-    private String message;
+-    private List<String> tags;
+-
+-    @Override
+-    public String toString() {
+-        return "Issue{" +
+-                "key='" + key + '\'' +
+-                ", rule='" + rule + '\'' +
+-                ", severity='" + severity + '\'' +
+-                ", component='" + component + '\'' +
+-                ", project='" + project + '\'' +
+-                ", line=" + line +
+-                ", status='" + status + '\'' +
+-                ", message='" + message + '\'' +
+-                ", tags=" + tags +
+-                '}';
+-    }
+-
+-
+-    public String getKey() {
+-        return key;
+-    }
+-
+-    public void setKey(String key) {
+-        this.key = key;
+-    }
+-
+-    public String getRule() {
+-        return rule;
+-    }
+-
+-    public void setRule(String rule) {
+-        this.rule = rule;
+-    }
+-
+-    public String getSeverity() {
+-        return severity;
+-    }
+-
+-    public void setSeverity(String severity) {
+-        this.severity = severity;
+-    }
+-
+-    public String getComponent() {
+-        return component;
+-    }
+-
+-    public void setComponent(String component) {
+-        this.component = component;
+-    }
+-
+-    public String getProject() {
+-        return project;
+-    }
+-
+-    public void setProject(String project) {
+-        this.project = project;
+-    }
+-
+-    public int getLine() {
+-        return line;
+-    }
+-
+-    public void setLine(int line) {
+-        this.line = line;
+-    }
+-
+-    public String getStatus() {
+-        return status;
+-    }
+-
+-    public void setStatus(String status) {
+-        this.status = status;
+-    }
+-
+-    public String getMessage() {
+-        return message;
+-    }
+-
+-    public void setMessage(String message) {
+-        this.message = message;
+-    }
+-
+-    public List<String> getTags() {
+-        return tags;
+-    }
+-
+-    public void setTags(List<String> tags) {
+-        this.tags = tags;
+-    }
+-}
+\ No newline at end of file
+Index: microservice/src/main/java/com/ericsson/entity/IssuesResponse.java
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java b/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java
+deleted file mode 100644
+--- a/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ /dev/null	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
+@@ -1,18 +0,0 @@
+-package com.ericsson.entity;
+-
+-import org.springframework.stereotype.Service;
+-
+-import java.util.List;
+-
+-@Service
+-public class IssuesResponse {
+-    private List<Issue> issues;
+-
+-    public List<Issue> getIssues() {
+-        return issues;
+-    }
+-
+-    public void setIssues(List<Issue> issues) {
+-        this.issues = issues;
+-    }
+-}
+\ No newline at end of file
+Index: microservice/src/main/resources/public/script.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>    function handle(number,list){\r\n    count = 0;\r\n\r\n        for (var i = 0; i < list.length; i++) {\r\n            var obj = list[i];\r\n\r\n            // Get the 'key' property value\r\n            var key = obj.key;\r\n\r\n            // Check if the key already exists in the count object\r\n            if (count.hasOwnProperty(key)) {\r\n                // Increment the count if the key exists\r\n                count[key]++;\r\n            } else {\r\n                // Initialize the count to 1 if the key doesn't exist\r\n                count[key] = 1;\r\n            }\r\n        }\r\n\r\n        var countElement = document.getElementById(\"step\" + number);\r\n        countElement.append(\"Count: \" + JSON.stringify(count));\r\n    }\r\n    function getGeneric(number){\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/owasp\"+number,\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                handle(number,response)\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n\r\n    }\r\n    $(document).ready(function() {\r\n\r\n        for(i =1; i <=10; i++ ){\r\n            getGeneric(i);\r\n        }\r\n});
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/resources/public/script.js b/microservice/src/main/resources/public/script.js
+--- a/microservice/src/main/resources/public/script.js	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ b/microservice/src/main/resources/public/script.js	(date 1684766987706)
+@@ -1,20 +1,8 @@
+     function handle(number,list){
+-    count = 0;
++    var count = 0;
+ 
+         for (var i = 0; i < list.length; i++) {
+-            var obj = list[i];
+-
+-            // Get the 'key' property value
+-            var key = obj.key;
+-
+-            // Check if the key already exists in the count object
+-            if (count.hasOwnProperty(key)) {
+-                // Increment the count if the key exists
+-                count[key]++;
+-            } else {
+-                // Initialize the count to 1 if the key doesn't exist
+-                count[key] = 1;
+-            }
++            count++;
+         }
+ 
+         var countElement = document.getElementById("step" + number);
+Index: microservice/src/main/java/com/ericsson/entity/SecurityHistory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ericsson.entity;\r\n\r\nimport jakarta.persistence.Entity;\r\nimport jakarta.persistence.Id;\r\n\r\n@Entity(name = \"security_history\")\r\npublic class SecurityHistory {\r\n    @Id\r\n    private Long id;\r\n\r\n    private String proj_name;\r\n\r\n    private String datetime;\r\n\r\n    private String owasp1_count;\r\n\r\n    private String owasp2_count;\r\n\r\n    private String owasp3_count;\r\n\r\n    private String owasp4_count;\r\n\r\n    private String owasp5_count;\r\n\r\n    private String owasp6_count;\r\n\r\n    private String owasp7_count;\r\n\r\n    private String owasp8_count;\r\n\r\n    private String owasp9_count;\r\n\r\n    private String owasp10_count;\r\n\r\n    private String cest_count;\r\n\r\n    private String cwe_count;\r\n\r\n\r\n\r\n\r\n    public void setId(Long id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public Long getId() {\r\n        return id;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java b/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java
+--- a/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ b/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java	(date 1684763882391)
+@@ -1,44 +1,59 @@
+ package com.ericsson.entity;
+ 
+-import jakarta.persistence.Entity;
+-import jakarta.persistence.Id;
++import jakarta.persistence.*;
++
++import java.time.LocalDateTime;
+ 
+ @Entity(name = "security_history")
+ public class SecurityHistory {
+-    @Id
++    @Id()
++    @GeneratedValue(strategy = GenerationType.SEQUENCE)
++    @Column(name = "id", nullable = false)
+     private Long id;
+ 
++    @Column(name = "proj_name", nullable = false)
+     private String proj_name;
+ 
+-    private String datetime;
++    @Column(name = "datetime", nullable = false)
++    private LocalDateTime datetime;
+ 
++    @Column(name = "owasp1_count", nullable = false)
+     private String owasp1_count;
+ 
++    @Column(name = "owasp2_count", nullable = false)
+     private String owasp2_count;
+ 
++    @Column(name = "owasp3_count", nullable = false)
+     private String owasp3_count;
+ 
++    @Column(name = "owasp4_count", nullable = false)
+     private String owasp4_count;
+ 
++    @Column(name = "owasp5_count", nullable = false)
+     private String owasp5_count;
+ 
++    @Column(name = "owasp6_count", nullable = false)
+     private String owasp6_count;
+ 
++    @Column(name = "owasp7_count", nullable = false)
+     private String owasp7_count;
+ 
++    @Column(name = "owasp8_count", nullable = false)
+     private String owasp8_count;
+ 
++    @Column(name = "owasp9_count", nullable = false)
+     private String owasp9_count;
+ 
++    @Column(name = "owasp10_count", nullable = false)
+     private String owasp10_count;
+ 
++    @Column(name = "cest_count", nullable = false)
+     private String cest_count;
+ 
++    @Column(name = "cwe_count", nullable = false)
+     private String cwe_count;
+ 
+ 
+-
+-
+     public void setId(Long id) {
+         this.id = id;
+     }
+@@ -46,4 +61,116 @@
+     public Long getId() {
+         return id;
+     }
++
++    public String getProj_name() {
++        return proj_name;
++    }
++
++    public void setProj_name(String proj_name) {
++        this.proj_name = proj_name;
++    }
++
++    public LocalDateTime getDatetime() {
++        return datetime;
++    }
++
++    public void setDatetime(LocalDateTime datetime) {
++        this.datetime = datetime;
++    }
++
++    public String getOwasp1_count() {
++        return owasp1_count;
++    }
++
++    public void setOwasp1_count(String owasp1_count) {
++        this.owasp1_count = owasp1_count;
++    }
++
++    public String getOwasp2_count() {
++        return owasp2_count;
++    }
++
++    public void setOwasp2_count(String owasp2_count) {
++        this.owasp2_count = owasp2_count;
++    }
++
++    public String getOwasp3_count() {
++        return owasp3_count;
++    }
++
++    public void setOwasp3_count(String owasp3_count) {
++        this.owasp3_count = owasp3_count;
++    }
++
++    public String getOwasp4_count() {
++        return owasp4_count;
++    }
++
++    public void setOwasp4_count(String owasp4_count) {
++        this.owasp4_count = owasp4_count;
++    }
++
++    public String getOwasp5_count() {
++        return owasp5_count;
++    }
++
++    public void setOwasp5_count(String owasp5_count) {
++        this.owasp5_count = owasp5_count;
++    }
++
++    public String getOwasp6_count() {
++        return owasp6_count;
++    }
++
++    public void setOwasp6_count(String owasp6_count) {
++        this.owasp6_count = owasp6_count;
++    }
++
++    public String getOwasp7_count() {
++        return owasp7_count;
++    }
++
++    public void setOwasp7_count(String owasp7_count) {
++        this.owasp7_count = owasp7_count;
++    }
++
++    public String getOwasp8_count() {
++        return owasp8_count;
++    }
++
++    public void setOwasp8_count(String owasp8_count) {
++        this.owasp8_count = owasp8_count;
++    }
++
++    public String getOwasp9_count() {
++        return owasp9_count;
++    }
++
++    public void setOwasp9_count(String owasp9_count) {
++        this.owasp9_count = owasp9_count;
++    }
++
++    public String getOwasp10_count() {
++        return owasp10_count;
++    }
++
++    public void setOwasp10_count(String owasp10_count) {
++        this.owasp10_count = owasp10_count;
++    }
++
++    public String getCest_count() {
++        return cest_count;
++    }
++
++    public void setCest_count(String cest_count) {
++        this.cest_count = cest_count;
++    }
++
++    public String getCwe_count() {
++        return cwe_count;
++    }
++
++    public void setCwe_count(String cwe_count) {
++        this.cwe_count = cwe_count;
++    }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"377e0f65-ecc1-4c5a-bd8b-69f94be42722\" name=\"Changes\" comment=\"Service\">\r\n      <change afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"development\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"ROOT_SYNC\" value=\"DONT_SYNC\" />\r\n  </component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"development\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486897\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"main\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486896\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Q0OaBcUcTmTpRUV7lQcVCmy383\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RequestMappingsPanelOrder0\": \"0\",\r\n    \"RequestMappingsPanelOrder1\": \"1\",\r\n    \"RequestMappingsPanelWidth0\": \"75\",\r\n    \"RequestMappingsPanelWidth1\": \"75\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"last_opened_file_path\": \"C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.ericsson\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.MicroserviceApplication\">\r\n    <configuration name=\"generated-requests | #1\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" requestIdentifier=\"#1\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"generated-requests | #2\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" index=\"2\" requestIdentifier=\"#2\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"MicroserviceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\r\n      <module name=\"microservice\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.ericsson.MicroserviceApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"HTTP Request.generated-requests | #1\" />\r\n        <item itemvalue=\"HTTP Request.generated-requests | #2\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"909b42ed-e87e-4ac1-a2d1-3500aa818899\" name=\"Changes\" comment=\"\" />\r\n      <created>1684487098006</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1684486876411</updated>\r\n      <workItem from=\"1684486878242\" duration=\"2957000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Initial commit.\">\r\n      <created>1684487102737</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487102737</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Initial commit.\">\r\n      <created>1684487192980</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487192980</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Initial commit.\">\r\n      <created>1684487552471</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487552471</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Service\">\r\n      <created>1684748203158</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684748203158</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Service\">\r\n      <created>1684754412095</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684754412095</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Service\">\r\n      <created>1684760435154</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684760435154</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"7\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"development\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Service\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Service\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 58d0550810717d2ecda23f5b73700dd56c4b06ea)
++++ b/.idea/workspace.xml	(date 1684837110912)
+@@ -5,10 +5,19 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Service">
+-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Hotspot.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/HotspotResponse.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/ClassifiedIssues.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/Issue.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/IssuesResponse.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/entity/SecurityHistory.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/IssueClassifier.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -32,6 +41,7 @@
+     <option name="ROOT_SYNC" value="DONT_SYNC" />
+   </component>
+   <component name="GitToolBoxStore">
++    <option name="projectConfigVersion" value="5" />
+     <option name="recentBranches">
+       <RecentBranches>
+         <option name="branchesForRepo">
+@@ -72,22 +82,27 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RequestMappingsPanelOrder0": "0",
+-    "RequestMappingsPanelOrder1": "1",
+-    "RequestMappingsPanelWidth0": "75",
+-    "RequestMappingsPanelWidth1": "75",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "main",
+-    "last_opened_file_path": "C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
++    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
++    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
++    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;spring.configuration.checksum&quot;: &quot;c38d2554a47067dba649709913530e2a&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+       <recent name="com.ericsson" />
+@@ -117,12 +132,14 @@
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="909b42ed-e87e-4ac1-a2d1-3500aa818899" name="Changes" comment="" />
++      <changelist id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="Service" />
+       <created>1684487098006</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1684486876411</updated>
+       <workItem from="1684486878242" duration="2957000" />
++      <workItem from="1684769552343" duration="524000" />
++      <workItem from="1684831741203" duration="4999000" />
+     </task>
+     <task id="LOCAL-00001" summary="Initial commit.">
+       <created>1684487102737</created>
+@@ -166,8 +183,18 @@
+       <option name="project" value="LOCAL" />
+       <updated>1684760435154</updated>
+     </task>
+-    <option name="localTasksCounter" value="7" />
++    <task id="LOCAL-00007" summary="Service">
++      <created>1684762610046</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1684762610046</updated>
++    </task>
++    <option name="localTasksCounter" value="8" />
+     <servers />
++  </component>
++  <component name="TypeScriptGeneratedFilesManager">
++    <option name="version" value="3" />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+     <option name="TAB_STATES">
+Index: microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java b/microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java
+new file mode 100644
+--- /dev/null	(date 1684836173746)
++++ b/microservice/src/main/java/com/ericsson/entity/ClassifiedHotspots.java	(date 1684836173746)
+@@ -0,0 +1,120 @@
++package com.ericsson.entity;
++
++import jakarta.persistence.Entity;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Component;
++
++import java.util.List;
++
++@Component
++public class ClassifiedHotspots {
++
++    List<Hotspot> owaspa1;
++    List<Hotspot> owaspa2;
++    List<Hotspot> owaspa3;
++    List<Hotspot> owaspa4;
++    List<Hotspot> owaspa5;
++    List<Hotspot> owaspa6;
++    List<Hotspot> owaspa7;
++    List<Hotspot> owaspa8;
++    List<Hotspot> owaspa9;
++    List<Hotspot> owaspa10;
++    List<Hotspot> cest;
++    List<Hotspot> cwe;
++
++    public List<Hotspot> getOwaspa1() {
++        return owaspa1;
++    }
++
++    public void setOwaspa1(List<Hotspot> owaspa1) {
++        this.owaspa1 = owaspa1;
++    }
++
++    public List<Hotspot> getOwaspa2() {
++        return owaspa2;
++    }
++
++    public void setOwaspa2(List<Hotspot> owaspa2) {
++        this.owaspa2 = owaspa2;
++    }
++
++    public List<Hotspot> getOwaspa3() {
++        return owaspa3;
++    }
++
++    public void setOwaspa3(List<Hotspot> owaspa3) {
++        this.owaspa3 = owaspa3;
++    }
++
++    public List<Hotspot> getOwaspa4() {
++        return owaspa4;
++    }
++
++    public void setOwaspa4(List<Hotspot> owaspa4) {
++        this.owaspa4 = owaspa4;
++    }
++
++    public List<Hotspot> getOwaspa5() {
++        return owaspa5;
++    }
++
++    public void setOwaspa5(List<Hotspot> owaspa5) {
++        this.owaspa5 = owaspa5;
++    }
++
++    public List<Hotspot> getOwaspa6() {
++        return owaspa6;
++    }
++
++    public void setOwaspa6(List<Hotspot> owaspa6) {
++        this.owaspa6 = owaspa6;
++    }
++
++    public List<Hotspot> getOwaspa7() {
++        return owaspa7;
++    }
++
++    public void setOwaspa7(List<Hotspot> owaspa7) {
++        this.owaspa7 = owaspa7;
++    }
++
++    public List<Hotspot> getOwaspa8() {
++        return owaspa8;
++    }
++
++    public void setOwaspa8(List<Hotspot> owaspa8) {
++        this.owaspa8 = owaspa8;
++    }
++
++    public List<Hotspot> getOwaspa9() {
++        return owaspa9;
++    }
++
++    public void setOwaspa9(List<Hotspot> owaspa9) {
++        this.owaspa9 = owaspa9;
++    }
++
++    public List<Hotspot> getOwaspa10() {
++        return owaspa10;
++    }
++
++    public void setOwaspa10(List<Hotspot> owaspa10) {
++        this.owaspa10 = owaspa10;
++    }
++
++    public List<Hotspot> getCest() {
++        return cest;
++    }
++
++    public void setCest(List<Hotspot> cest) {
++        this.cest = cest;
++    }
++
++    public List<Hotspot> getCwe() {
++        return cwe;
++    }
++
++    public void setCwe(List<Hotspot> cwe) {
++        this.cwe = cwe;
++    }
++}
+Index: microservice/src/main/java/com/ericsson/entity/HotspotResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/HotspotResponse.java b/microservice/src/main/java/com/ericsson/entity/HotspotResponse.java
+new file mode 100644
+--- /dev/null	(date 1684836739005)
++++ b/microservice/src/main/java/com/ericsson/entity/HotspotResponse.java	(date 1684836739005)
+@@ -0,0 +1,18 @@
++package com.ericsson.entity;
++
++import org.springframework.stereotype.Component;
++
++import java.util.List;
++
++@Component
++public class HotspotResponse {
++    private List<Hotspot> hotspots;
++
++    public List<Hotspot> getHotspots() {
++        return hotspots;
++    }
++
++    public void setHotspots(List<Hotspot> hotspots) {
++        this.hotspots = hotspots;
++    }
++}
+\ No newline at end of file
+Index: microservice/src/main/java/com/ericsson/entity/Hotspot.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/entity/Hotspot.java b/microservice/src/main/java/com/ericsson/entity/Hotspot.java
+new file mode 100644
+--- /dev/null	(date 1684835851682)
++++ b/microservice/src/main/java/com/ericsson/entity/Hotspot.java	(date 1684835851682)
+@@ -0,0 +1,274 @@
++package com.ericsson.entity;
++
++import org.springframework.stereotype.Component;
++
++import java.util.List;
++
++@Component
++public class Hotspot {
++    private String key;
++    private String component;
++    private String project;
++    private String securityCategory;
++    private String vulnerabilityProbability;
++    private String status;
++    private int line;
++    private String message;
++    private String author;
++    private String creationDate;
++    private String updateDate;
++    private TextRange textRange;
++    private List<Flow> flows;
++    private String ruleKey;
++
++    // TODO: Add TextRange and Flow classes, or import if already defined
++
++    public String getKey() {
++        return key;
++    }
++
++    public void setKey(String key) {
++        this.key = key;
++    }
++
++    public String getComponent() {
++        return component;
++    }
++
++    public void setComponent(String component) {
++        this.component = component;
++    }
++
++    public String getProject() {
++        return project;
++    }
++
++    public void setProject(String project) {
++        this.project = project;
++    }
++
++    public String getSecurityCategory() {
++        return securityCategory;
++    }
++
++    public void setSecurityCategory(String securityCategory) {
++        this.securityCategory = securityCategory;
++    }
++
++    public String getVulnerabilityProbability() {
++        return vulnerabilityProbability;
++    }
++
++    public void setVulnerabilityProbability(String vulnerabilityProbability) {
++        this.vulnerabilityProbability = vulnerabilityProbability;
++    }
++
++    public String getStatus() {
++        return status;
++    }
++
++    public void setStatus(String status) {
++        this.status = status;
++    }
++
++    public int getLine() {
++        return line;
++    }
++
++    public void setLine(int line) {
++        this.line = line;
++    }
++
++    public String getMessage() {
++        return message;
++    }
++
++    public void setMessage(String message) {
++        this.message = message;
++    }
++
++    public String getAuthor() {
++        return author;
++    }
++
++    public void setAuthor(String author) {
++        this.author = author;
++    }
++
++    public String getCreationDate() {
++        return creationDate;
++    }
++
++    public void setCreationDate(String creationDate) {
++        this.creationDate = creationDate;
++    }
++
++    public String getUpdateDate() {
++        return updateDate;
++    }
++
++    public void setUpdateDate(String updateDate) {
++        this.updateDate = updateDate;
++    }
++
++    public TextRange getTextRange() {
++        return textRange;
++    }
++
++    public void setTextRange(TextRange textRange) {
++        this.textRange = textRange;
++    }
++
++    public List<Flow> getFlows() {
++        return flows;
++    }
++
++    public void setFlows(List<Flow> flows) {
++        this.flows = flows;
++    }
++
++    public String getRuleKey() {
++        return ruleKey;
++    }
++
++    public void setRuleKey(String ruleKey) {
++        this.ruleKey = ruleKey;
++    }
++
++
++
++    @Override
++    public String toString() {
++        return "Hotspot{" +
++                "key='" + key + '\'' +
++                ", component='" + component + '\'' +
++                ", project='" + project + '\'' +
++                ", securityCategory='" + securityCategory + '\'' +
++                ", vulnerabilityProbability='" + vulnerabilityProbability + '\'' +
++                ", status='" + status + '\'' +
++                ", line=" + line +
++                ", message='" + message + '\'' +
++                ", author='" + author + '\'' +
++                ", creationDate='" + creationDate + '\'' +
++                ", updateDate='" + updateDate + '\'' +
++                ", textRange=" + textRange +
++                ", flows=" + flows +
++                ", ruleKey='" + ruleKey + '\'' +
++                '}';
++    }
++
++
++}
++
++class TextRange {
++    private int startLine;
++    private int endLine;
++    private int startOffset;
++    private int endOffset;
++
++    public int getStartLine() {
++        return startLine;
++    }
++
++    public void setStartLine(int startLine) {
++        this.startLine = startLine;
++    }
++
++    public int getEndLine() {
++        return endLine;
++    }
++
++    public void setEndLine(int endLine) {
++        this.endLine = endLine;
++    }
++
++    public int getStartOffset() {
++        return startOffset;
++    }
++
++    public void setStartOffset(int startOffset) {
++        this.startOffset = startOffset;
++    }
++
++    public int getEndOffset() {
++        return endOffset;
++    }
++
++    public void setEndOffset(int endOffset) {
++        this.endOffset = endOffset;
++    }
++
++    @Override
++    public String toString() {
++        return "TextRange{" +
++                "startLine=" + startLine +
++                ", endLine=" + endLine +
++                ", startOffset=" + startOffset +
++                ", endOffset=" + endOffset +
++                '}';
++    }
++
++    // TODO: Generate getters and setters for each field
++}
++
++class Flow {
++    private List<Location> locations;
++
++    public List<Location> getLocations() {
++        return locations;
++    }
++
++    public void setLocations(List<Location> locations) {
++        this.locations = locations;
++    }
++
++    @Override
++    public String toString() {
++        return "Flow{" +
++                "locations=" + locations +
++                '}';
++    }
++
++    // TODO: Generate getters and setters for each field
++}
++
++class Location {
++    private String component;
++    private TextRange textRange;
++    private String msg;
++
++    public String getComponent() {
++        return component;
++    }
++
++    public void setComponent(String component) {
++        this.component = component;
++    }
++
++    public TextRange getTextRange() {
++        return textRange;
++    }
++
++    public void setTextRange(TextRange textRange) {
++        this.textRange = textRange;
++    }
++
++    public String getMsg() {
++        return msg;
++    }
++
++    public void setMsg(String msg) {
++        this.msg = msg;
++    }
++
++    @Override
++    public String toString() {
++        return "Location{" +
++                "component='" + component + '\'' +
++                ", textRange=" + textRange +
++                ", msg='" + msg + '\'' +
++                '}';
++    }
++
++    // TODO: Generate getters and setters for each field
++}
+\ No newline at end of file
+Index: microservice/src/main/java/com/ericsson/service/HotspotClassifier.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java b/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java
+new file mode 100644
+--- /dev/null	(date 1684837110837)
++++ b/microservice/src/main/java/com/ericsson/service/HotspotClassifier.java	(date 1684837110837)
+@@ -0,0 +1,113 @@
++package com.ericsson.service;
++
++
++import com.ericsson.entity.Hotspot;
++import com.ericsson.entity.SecurityHistory;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Service;
++
++import java.time.LocalDateTime;
++import java.util.ArrayList;
++import java.util.List;
++
++@Service
++public class HotspotClassifier {
++
++    private com.ericsson.entity.HotspotResponse hotspotResponse;
++
++
++    @Autowired
++    private com.ericsson.entity.Hotspot hotspot;
++
++    @Autowired
++    private com.ericsson.service.SonarQubeService sonarQubeService;
++
++    @Autowired
++    private com.ericsson.entity.ClassifiedHotspots classifiedhotspots;
++
++    @Autowired
++    private com.ericsson.repository.SecuityHistoryJPA secuityHistoryJPA;
++
++
++    private com.ericsson.entity.SecurityHistory securityHistory;
++
++    public com.ericsson.entity.SecurityHistory getSecurityHistory() {
++        return securityHistory;
++    }
++
++    public void classify() {
++        List<Hotspot> owaspa1 = new ArrayList<>();
++        List<Hotspot> owaspa2 = new ArrayList<>();
++        List<Hotspot> owaspa3 = new ArrayList<>();
++        List<Hotspot> owaspa4 = new ArrayList<>();
++        List<Hotspot> owaspa5 = new ArrayList<>();
++        List<Hotspot> owaspa6 = new ArrayList<>();
++        List<Hotspot> owaspa7 = new ArrayList<>();
++        List<Hotspot> owaspa8 = new ArrayList<>();
++        List<Hotspot> owaspa9 = new ArrayList<>();
++        List<Hotspot> owaspa10 = new ArrayList<>();
++        List<Hotspot> cest = new ArrayList<>();
++        List<Hotspot> cwe = new ArrayList<>();
++        for (Hotspot hotspot : sonarQubeService.getIssues()) {
++            System.out.println(hotspot.getRuleKey());
++            if ( hotspot.getRuleKey().equals("java:S5852") || hotspot.getRuleKey().equals("java:S5443")) {
++                owaspa1.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S4790") || hotspot.getRuleKey().equals("java:S6291") || hotspot.getRuleKey().equals("java:S2245") || hotspot.getRuleKey().equals("java:S2257") || hotspot.getRuleKey().equals("java:S5332")) {
++                owaspa2.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S2077") || hotspot.getRuleKey().equals("java:S1313")|| hotspot.getRuleKey().equals("java:S4512")) {
++                owaspa3.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S6300") || hotspot.getRuleKey().contains("java:S2612")) {
++                owaspa4.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S5122")) {
++                owaspa5.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S6362") || hotspot.getRuleKey().equals("java:S5042")) {
++                owaspa6.add(hotspot);
++            }
++            if (hotspot.getRuleKey().contains("java:S2068") || hotspot.getRuleKey().equals("java:S6293") || hotspot.getRuleKey().equals("java:S6418")) {
++                owaspa7.add(hotspot);
++            }
++            if (hotspot.getRuleKey().equals("java:S4544") || hotspot.getRuleKey().equals("java:S4036")) {
++                owaspa8.add(hotspot);
++            }
++
++        }
++        classifiedhotspots.setOwaspa1(owaspa1);
++        classifiedhotspots.setOwaspa2(owaspa2);
++        classifiedhotspots.setOwaspa3(owaspa3);
++        classifiedhotspots.setOwaspa4(owaspa4);
++        classifiedhotspots.setOwaspa5(owaspa5);
++        classifiedhotspots.setOwaspa6(owaspa6);
++        classifiedhotspots.setOwaspa7(owaspa7);
++        classifiedhotspots.setOwaspa8(owaspa8);
++        classifiedhotspots.setOwaspa9(owaspa9);
++        classifiedhotspots.setOwaspa10(owaspa10);
++
++
++
++        securityHistory = new SecurityHistory();
++        securityHistory.setDatetime(LocalDateTime.parse(LocalDateTime.now().toString()));
++        securityHistory.setProj_name("Test");
++        securityHistory.setOwasp1_count(String.valueOf(owaspa1.size()));
++        securityHistory.setOwasp2_count(String.valueOf(owaspa2.size()));
++        securityHistory.setOwasp3_count(String.valueOf(owaspa3.size()));
++        securityHistory.setOwasp4_count(String.valueOf(owaspa4.size()));
++        securityHistory.setOwasp5_count(String.valueOf(owaspa5.size()));
++        securityHistory.setOwasp6_count(String.valueOf(owaspa6.size()));
++        securityHistory.setOwasp7_count(String.valueOf(owaspa7.size()));
++        securityHistory.setOwasp8_count(String.valueOf(owaspa8.size()));
++        securityHistory.setOwasp9_count(String.valueOf(owaspa9.size()));
++        securityHistory.setOwasp10_count(String.valueOf(owaspa10.size()));
++        securityHistory.setCest_count(String.valueOf(cest.size()));
++        securityHistory.setCwe_count(String.valueOf(cwe.size()));
++        secuityHistoryJPA.save(securityHistory);
++
++
++
++        System.out.println("Classified hotspots");
++    }
++}

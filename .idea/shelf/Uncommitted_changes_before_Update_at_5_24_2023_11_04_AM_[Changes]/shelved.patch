@@ -1,0 +1,192 @@
+Index: microservice/src/main/resources/public/script.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>    function handle(number,list){\r\n    var count = 0;\r\n\r\n        for (var i = 0; i < list.length; i++) {\r\n            count++;\r\n        }\r\n\r\n        var countElement = document.getElementById(\"step\" + number);\r\n        countElement.append(\"Count: \" + JSON.stringify(count));\r\n    }\r\n\r\n    function Drawgraph(json){\r\n\r\n    }\r\n\r\n    function getAndDrawOverAllRating() {\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/rating\",\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                var ratingOverAllElement = document.getElementById(\"ratingOverAll\");\r\n                if (response === 1) {\r\n                    ratingOverAllElement.textContent = \"A\";\r\n                } else if (response === 2) {\r\n                    ratingOverAllElement.textContent = \"B\";\r\n                } else if (response === 3) {\r\n                    ratingOverAllElement.textContent = \"C\";\r\n                } else if (response === 4) {\r\n                    ratingOverAllElement.textContent = \"D\";\r\n                } else if (response === 5) {\r\n                    ratingOverAllElement.textContent = \"E\";\r\n                } else {\r\n                    ratingOverAllElement.textContent = \"Unknown\";\r\n                }\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    function getGraphingData(){\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/repo\",\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                Drawgraph(response);\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n    }\r\n\r\n    function getGeneric(number){\r\n        $.ajax({\r\n            url: \"http://localhost:8080/api/v1/owasp\"+number,\r\n            type: \"GET\",\r\n            success: function(response) {\r\n                console.log(\"GET request successful:\", response);\r\n                handle(number,response)\r\n            },\r\n            error: function(xhr, status, error) {\r\n                console.log(\"GET request error:\", error);\r\n                // Handle the error here\r\n            }\r\n        });\r\n\r\n    }\r\n    $(document).ready(function() {\r\n\r\n        for(i =1; i <=10; i++ ){\r\n            getGeneric(i);\r\n        }\r\n\r\n        getGraphingData();\r\n        getAndDrawOverAllRating();\r\n\r\n});
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/microservice/src/main/resources/public/script.js b/microservice/src/main/resources/public/script.js
+--- a/microservice/src/main/resources/public/script.js	(revision 64b526d6fd972d410df7b0ce526592b0cad89e92)
++++ b/microservice/src/main/resources/public/script.js	(date 1684922640032)
+@@ -1,13 +1,31 @@
+-    function handle(number,list){
++
++const gradea1 = 0;
++const gradea2 = 0;
++const gradea3 = 0;
++const gradea4 = 0;
++const gradea5 = 0;
++const gradea6 = 0;
++const gradea7 = 0;
++const gradea8 = 0;
++const gradea9 = 0;
++const gradea10 = 0;
++const category_count = 0;
++const category = ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10"]
++var data = {}
++
++
++
++
++function handle(number,list){
+     var count = 0;
+-
+         for (var i = 0; i < list.length; i++) {
+             count++;
++
+         }
+ 
+         var countElement = document.getElementById("step" + number);
+         countElement.append("Count: " + JSON.stringify(count));
+-    }
++    }5
+ 
+     function Drawgraph(json){
+ 
+@@ -20,15 +38,15 @@
+             success: function(response) {
+                 console.log("GET request successful:", response);
+                 var ratingOverAllElement = document.getElementById("ratingOverAll");
+-                if (response === 1) {
++                if (response === "1.0") {
+                     ratingOverAllElement.textContent = "A";
+-                } else if (response === 2) {
++                } else if (response === "2.0") {
+                     ratingOverAllElement.textContent = "B";
+-                } else if (response === 3) {
++                } else if (response === "3.0") {
+                     ratingOverAllElement.textContent = "C";
+-                } else if (response === 4) {
++                } else if (response === "4.0") {
+                     ratingOverAllElement.textContent = "D";
+-                } else if (response === 5) {
++                } else if (response === "5.0") {
+                     ratingOverAllElement.textContent = "E";
+                 } else {
+                     ratingOverAllElement.textContent = "Unknown";
+Index: microservice/src/main/resources/public/index.html
+===================================================================
+diff --git a/microservice/src/main/resources/public/index.html b/microservice/src/main/resources/public/index.html
+deleted file mode 100644
+--- a/microservice/src/main/resources/public/index.html	(revision 64b526d6fd972d410df7b0ce526592b0cad89e92)
++++ /dev/null	(revision 64b526d6fd972d410df7b0ce526592b0cad89e92)
+@@ -1,70 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>OWASP Top Ten Rules</title>
+-    <link rel="stylesheet" href="style.css">
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+-</head>
+-
+-<body>
+-<header>
+-    <h1>OWASP Top Ten Rules</h1>
+-</header>
+-
+-<main>
+-    <br>
+-    <br>
+-    <div> <h3> Overall Security Rating of the Repository : </h3> <p class = "rating" id = "ratingOverAll"></p></div>
+-    <div class = "topTen">
+-    <ol>
+-        <li id="step1">
+-            <h2>A1:  Broken Access Control</h2>
+-            <p></p>
+-        </li>
+-        <li id="step2">
+-            <h2>A2: Cryptographic Failures</h2>
+-            <p></p>
+-        </li>
+-        <li id="step3">
+-            <h2>A3: Injection</h2>
+-            <p></p>
+-        </li>
+-        <li id="step4">
+-            <h2>A4:Insecure Design</h2>
+-            <p></p>
+-        </li>
+-        <li id="step5">
+-            <h2>A5:Security Misconfiguration</h2>
+-            <p></p>
+-        </li>
+-        <li id="step6">
+-            <h2>A6: Vulnerable and Outdated Components</h2>
+-            <p></p>
+-        </li>
+-        <li id="step7">
+-            <h2>A7: Identifaction And Authentication Failures (XSS)</h2>
+-            <p></p>
+-        </li>
+-        <li id="step8">
+-            <h2>A8: Software and Data Integrity Failures</h2>
+-            <p></p>
+-        </li>
+-        <li id="step9">
+-            <h2>A9: Security Logging and Monitoring Failures</h2>
+-            <p>Keep all components (libraries, frameworks, etc.) up to date and patch known vulnerabilities in a timely manner.</p>
+-        </li>
+-        <li id="step10">
+-            <h2>A10: Server Side Request Forgery</h2>
+-            <p>Implement proper logging and monitoring to detect and respond to security events and incidents in a timely manner.</p>
+-        </li>
+-    </ol>
+-    </div>
+-</main>
+-
+-<script src="script.js"></script>
+-</body>
+-
+-</html>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"377e0f65-ecc1-4c5a-bd8b-69f94be42722\" name=\"Changes\" comment=\"More great code\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"development\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"ROOT_SYNC\" value=\"DONT_SYNC\" />\r\n  </component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"development\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486897\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"main\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1684486896\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Q0OaBcUcTmTpRUV7lQcVCmy383\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,\r\n    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,\r\n    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,\r\n    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/soorya/Downloads/SimpleManagementNetworkConfiguration/SonarQubers/microservice/pom.xml&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;spring.configuration.checksum&quot;: &quot;c38d2554a47067dba649709913530e2a&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"com.ericsson\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.MicroserviceApplication\">\r\n    <configuration name=\"generated-requests | #1\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" requestIdentifier=\"#1\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"generated-requests | #2\" type=\"HttpClient.HttpRequestRunConfigurationType\" factoryName=\"HTTP Request\" temporary=\"true\" nameIsGenerated=\"true\" path=\"$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http\" index=\"2\" requestIdentifier=\"#2\" runType=\"Run single request\">\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"MicroserviceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\r\n      <module name=\"microservice\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.ericsson.MicroserviceApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"HTTP Request.generated-requests | #1\" />\r\n        <item itemvalue=\"HTTP Request.generated-requests | #2\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"377e0f65-ecc1-4c5a-bd8b-69f94be42722\" name=\"Changes\" comment=\"Service\" />\r\n      <created>1684487098006</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1684486876411</updated>\r\n      <workItem from=\"1684486878242\" duration=\"2957000\" />\r\n      <workItem from=\"1684769552343\" duration=\"524000\" />\r\n      <workItem from=\"1684831741203\" duration=\"12709000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Initial commit.\">\r\n      <created>1684487102737</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487102737</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Initial commit.\">\r\n      <created>1684487192980</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487192980</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Initial commit.\">\r\n      <created>1684487552471</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684487552471</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Service\">\r\n      <created>1684748203158</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684748203158</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Service\">\r\n      <created>1684754412095</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684754412095</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Service\">\r\n      <created>1684760435154</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684760435154</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Service\">\r\n      <created>1684762610046</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684762610046</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Some more rules and refactoring to fit Hotspot DOM\">\r\n      <created>1684838411961</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684838411961</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"More great code\">\r\n      <created>1684850737133</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1684850737133</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Service\" />\r\n    <MESSAGE value=\"Some more rules and refactoring to fit Hotspot DOM\" />\r\n    <MESSAGE value=\"More great code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"More great code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 64b526d6fd972d410df7b0ce526592b0cad89e92)
++++ b/.idea/workspace.xml	(date 1684922619620)
+@@ -6,10 +6,8 @@
+   <component name="ChangeListManager">
+     <list default="true" id="377e0f65-ecc1-4c5a-bd8b-69f94be42722" name="Changes" comment="More great code">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/microservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/pom.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/controller/WebController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/repository/SecuityHistoryJPA.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/java/com/ericsson/service/SonarQubeService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/microservice/src/main/resources/public/script.js" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -131,7 +129,8 @@
+       <updated>1684486876411</updated>
+       <workItem from="1684486878242" duration="2957000" />
+       <workItem from="1684769552343" duration="524000" />
+-      <workItem from="1684831741203" duration="12709000" />
++      <workItem from="1684831741203" duration="15912000" />
++      <workItem from="1684916880691" duration="3622000" />
+     </task>
+     <task id="LOCAL-00001" summary="Initial commit.">
+       <created>1684487102737</created>
+@@ -196,7 +195,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1684850737133</updated>
+     </task>
+-    <option name="localTasksCounter" value="10" />
++    <task id="LOCAL-00010" summary="More great code">
++      <created>1684854161892</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1684854161892</updated>
++    </task>
++    <option name="localTasksCounter" value="11" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">

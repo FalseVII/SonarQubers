@@ -29,9 +29,9 @@ public class SonarQubeService {
         //add header
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer squ_4d75bfdf908f2b1377e2e4ee86ae18777b4b9fac" );
+        headers.set("Authorization", "Bearer squ_e0440fbda8a8fc1a5454da4e827930981b51b1dc" );
 
-        String apiUrl = "http://localhost:9000/api/hotspots/search?projectKey=vuln_project&owaspTop10=a1,a2,a3,a4,a5,a6,a7,a8,a9,a10";
+        String apiUrl = "http://sonarqube:9000/api/hotspots/search?projectKey=vuln_project&owaspTop10=a1,a2,a3,a4,a5,a6,a7,a8,a9,a10";
 
         // You can add parameters to your URL if needed
 
@@ -47,12 +47,12 @@ public class SonarQubeService {
     }
 
     public String getSecurityReviewRating() throws Exception {
-        String apiUrl = "http://localhost:9000/api/measures/component?component=vuln_project&metricKeys=security_review_rating";
+        String apiUrl = "http://sonarqube:9000/api/measures/component?component=vuln_project&metricKeys=security_review_rating";
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer squ_4d75bfdf908f2b1377e2e4ee86ae18777b4b9fac");
+        conn.setRequestProperty("Authorization", "Bearer squ_e0440fbda8a8fc1a5454da4e827930981b51b1dc");
 
         if (conn.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP Error Code : " + conn.getResponseCode());
